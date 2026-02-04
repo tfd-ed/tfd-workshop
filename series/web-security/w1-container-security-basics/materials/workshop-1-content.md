@@ -462,23 +462,26 @@ sudo ls -la /proc/1/ns/
 
 ```mermaid
 graph LR
-    Container["Container Process"]
+    Container["🐳 Container<br/>Process"]
     
-    Container --> MNT["🗂️ mnt<br/>Filesystem<br/>Isolation"]
-    Container --> NET["🌐 net<br/>Network<br/>Stack"]
-    Container --> PID["🔢 pid<br/>Process<br/>Tree"]
-    Container --> UTS["🖥️ uts<br/>Hostname<br/>Isolation"]
-    Container --> IPC["💬 ipc<br/>Shared<br/>Memory"]
-    Container --> USER["👤 user<br/>UID<br/>Mapping"]
+    Container --> NS1["🗂️ mnt<br/>Filesystem"]
+    Container --> NS2["🌐 net<br/>Network"]
+    Container --> NS3["🔢 pid<br/>Processes"]
+    
+    Container --> NS4["🖥️ uts<br/>Hostname"]
+    Container --> NS5["💬 ipc<br/>IPC"]
+    Container --> NS6["👤 user<br/>UIDs"]
     
     style Container fill:#4ecdc4
-    style MNT fill:#95e1d3
-    style NET fill:#95e1d3
-    style PID fill:#95e1d3
-    style UTS fill:#95e1d3
-    style IPC fill:#95e1d3
-    style USER fill:#95e1d3
+    style NS1 fill:#95e1d3
+    style NS2 fill:#95e1d3
+    style NS3 fill:#95e1d3
+    style NS4 fill:#95e1d3
+    style NS5 fill:#95e1d3
+    style NS6 fill:#95e1d3
 ```
+
+**Six types of namespaces provide container isolation:**
 
 - **mnt** - Mount namespace (filesystem isolation)
 - **net** - Network namespace (separate network stack)
