@@ -129,36 +129,41 @@ graph TB
 
 ### One Kernel to Rule Them All
 
+**🏢 Virtual Machines = Separate Apartments**
+
 ```mermaid
-graph LR
-    subgraph VMs["🏢 Virtual Machines = Separate Apartments"]
-        A1["Apartment 1<br/>Own walls, locks<br/>Own kernel"]
-        A2["Apartment 2<br/>Own walls, locks<br/>Own kernel"]
-        A3["Apartment 3<br/>Own walls, locks<br/>Own kernel"]
-    end
+graph TB
+    A1["Apartment 1<br/>Own walls & locks<br/>Own kernel"]
+    A2["Apartment 2<br/>Own walls & locks<br/>Own kernel"]
+    A3["Apartment 3<br/>Own walls & locks<br/>Own kernel"]
     
-    subgraph Containers["🚪 Containers = Rooms in Same Apartment"]
-        R1["Room 1<br/>Namespace isolation"]
-        R2["Room 2<br/>Namespace isolation"]
-        R3["Room 3<br/>Namespace isolation"]
-        Door["🔑 Shared Front Door<br/>SINGLE KERNEL"]
-        
-        R1 --> Door
-        R2 --> Door
-        R3 --> Door
-    end
-    
-    style Door fill:#ff6b6b,color:#fff
     style A1 fill:#4ecdc4
     style A2 fill:#4ecdc4
     style A3 fill:#4ecdc4
+```
+
+> Break into one apartment? Still locked out of others
+
+**🚪 Containers = Rooms in Same Apartment**
+
+```mermaid
+graph TB
+    R1["Room 1<br/>Namespace isolation"]
+    R2["Room 2<br/>Namespace isolation"]
+    R3["Room 3<br/>Namespace isolation"]
+    Door["🔑 Shared Front Door<br/>SINGLE KERNEL"]
+    
+    R1 --> Door
+    R2 --> Door
+    R3 --> Door
+    
+    style Door fill:#ff6b6b,color:#fff
     style R1 fill:#ffe66d
     style R2 fill:#ffe66d
     style R3 fill:#ffe66d
 ```
 
-> **VMs:** Break into one apartment? Still locked out of others  
-> **Containers:** Break through shared kernel? Access to everything
+> Break through shared kernel? Access to everything
 
 ---
 
