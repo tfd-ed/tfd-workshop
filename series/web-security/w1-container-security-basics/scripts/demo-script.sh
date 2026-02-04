@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Workshop 1: Container Security Basics - Demo Script
-# This script automates the live demonstration
+# This script demonstrates key container security concepts
 
 set -e
 
