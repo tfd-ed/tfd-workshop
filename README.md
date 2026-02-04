@@ -49,224 +49,109 @@ Container security is critical in modern DevOps, yet many developers and enginee
 
 ---
 
-## Container Security Workshops Overview
+## 📋 Container Security Workshop Series
 
-### Workshop 1: Container Security Basics ✅ COMPLETED
-**Date:** February 4, 2026 | **Duration:** 2.5 hours | **Participants:** 300+
+### Workshop 1: Container Security Basics ✅ 
+**Completed:** February 4, 2026 | **Participants:** 300+ | **Level:** Beginner
 
-**What We Covered:**
-- Containers vs VMs (Security Perspective)
-- Shared Kernel Risks & Implications
-- Container Isolation Boundaries
-- Common Security Myths Debunked
-- Hands-on Security Demonstrations
+Learn the fundamentals of container security, shared kernel risks, and common security myths.
 
-**Status:** Materials available in [`/w1-container-security-basics`](./w1-container-security-basics/)
-
-**Recording:** [Watch on YouTube](#) | [Download Materials](./w1-container-security-basics/)
+**[📖 View Workshop Details →](./series/web-security/w1-container-security-basics/README.md)**
 
 ---
 
-### Workshop 2: Image Security & Attack Surface
-**Status:** 🚧 Coming Soon
+### Workshop 2: Image Security & Attack Surface 🚧
+**Status:** Coming Soon | **Level:** Beginner
 
-**Topics:**
-- How vulnerable images happen
-- The `latest` tag problem
-- Alpine vs Ubuntu vs Distroless
-- CVE scanning & vulnerability detection
-- Building minimal secure images
-
-**Duration:** 1 hour | **Level:** Beginner
+Vulnerable images, CVE scanning, and building minimal secure containers.
 
 ---
 
-### Workshop 3: Runtime Security & Privileged Containers
-**Status:** 🚧 Coming Soon
+### Workshop 3: Runtime Security & Privileged Containers 🚧
+**Status:** Coming Soon | **Level:** Intermediate
 
-**Topics:**
-- Linux capabilities explained
-- Why `--privileged` is dangerous
-- Container escape scenarios
-- Running containers as non-root
-- Capability dropping
-
-**Duration:** 1-1.5 hours | **Level:** Intermediate
+Linux capabilities, container escape scenarios, and running as non-root.
 
 ---
 
-### Workshop 4: Secrets & Configuration Security
-**Status:** 🚧 Coming Soon
+### Workshop 4: Secrets & Configuration Security 🚧
+**Status:** Coming Soon | **Level:** Intermediate
 
-**Topics:**
-- Why secrets in images are dangerous
-- Environment variables vs mounted secrets
-- Docker secrets & Kubernetes secrets
-- Secret rotation strategies
-- Avoiding Git leaks
-
-**Duration:** 1 hour | **Level:** Intermediate
+Secrets management, environment variables, and avoiding credential leaks.
 
 ---
 
-### Workshop 5: Network & Access Control
-**Status:** 🚧 Coming Soon
+### Workshop 5: Network & Access Control 🚧
+**Status:** Coming Soon | **Level:** Intermediate
 
-**Topics:**
-- Container networking security
-- Exposed ports & attack surface
-- Network isolation patterns
-- Service mesh basics
-- Zero-trust networking
-
-**Duration:** 1 hour | **Level:** Intermediate
+Container networking, isolation patterns, and zero-trust principles.
 
 ---
 
-### Workshop 6: Supply Chain & CI/CD Risks
-**Status:** 🚧 Coming Soon
+### Workshop 6: Supply Chain & CI/CD Risks 🚧
+**Status:** Coming Soon | **Level:** Advanced
 
-**Topics:**
-- Image poisoning attacks
-- Dependency vulnerabilities
-- Tag immutability
-- Container signing & verification
-- CI/CD security best practices
-
-**Duration:** 1 hour | **Level:** Advanced
+Image signing, dependency vulnerabilities, and CI/CD security.
 
 ---
 
-### Workshop 7: Final Project - Secure the Broken App
-**Status:** 🚧 Coming Soon
+### Workshop 7: Final Project - Secure the Broken App 🚧
+**Status:** Coming Soon | **Level:** All Levels
 
-**Format:** Hands-on Security Challenge
-
-**Scenario:** Fix a deliberately insecure containerized application
-
-**Tasks:**
-- Harden vulnerable Dockerfiles
-- Remove excessive privileges
-- Implement proper secret management
-- Configure network isolation
-- Apply defense-in-depth
-
-**Duration:** 1-1.5 hours | **Level:** All levels
+Hands-on challenge: Harden a deliberately insecure containerized application.
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Quick Start
 
-### Prerequisites
-
-- **Docker** installed and running
-- **Basic Linux command line** knowledge
-- **Terminal** access
-- **Text editor** (VS Code, Vim, etc.)
-- **Internet connection** for pulling images
-
-### Quick Start
+### For Participants
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/tfdevs/container-security-workshop-series.git
+   git clone https://github.com/KimangKhenng/tfd-workshop.git
    cd container-security-workshop-series
    ```
 
-2. **Choose a workshop:**
+2. **Choose your workshop:**
    ```bash
-   cd w1-container-security-basics
+   cd series/web-security/w1-container-security-basics
    ```
 
-3. **Review the README:**
+3. **Read the workshop README:**
    ```bash
    cat README.md
    ```
 
-4. **Run the setup script:**
-   ```bash
-   chmod +x scripts/lab-setup.sh
-   ./scripts/lab-setup.sh
-   ```
+4. **Follow the setup instructions in each workshop directory**
 
-5. **Follow the exercises:**
-   ```bash
-   cat exercises/hands-on-lab.md
-   ```
+### Prerequisites
 
-### Verify Your Environment
-
-```bash
-# Check Docker version
-docker --version
-
-# Test Docker is working
-docker run --rm hello-world
-
-# Check sudo access (optional but helpful)
-sudo -v
-```
+- Docker installed and running
+- Basic Linux command line knowledge
+- Terminal access
+- Text editor (VS Code, Vim, etc.)
+- Internet connection
 
 ---
 
-## Who Should Use This?
+## 🎓 Learning Paths
 
-This workshop series is perfect for:
-
-- ✅ **Developers** using Docker in projects
-- ✅ **DevOps Engineers** managing containerized workloads
-- ✅ **Security Professionals** learning container security
-- ✅ **CS Students** studying cloud technologies
-- ✅ **System Administrators** migrating to containers
-- ✅ **Tech Leads** implementing DevSecOps
-
----
-
-## 📖 Learning Path
-
-### Beginner Track
-1. Workshop 1: Container Security Basics
-2. Workshop 2: Image Security
-3. Workshop 4: Secrets Management
+### Beginner Track (Start Here)
+1. [Workshop 1: Container Security Basics](./series/web-security/w1-container-security-basics/README.md)
+2. Workshop 2: Image Security (Coming Soon)
+3. Workshop 4: Secrets Management (Coming Soon)
 
 ### Intermediate Track
-1. Workshop 3: Runtime Security
-2. Workshop 5: Network Security
-3. Workshop 6: Supply Chain
+1. Workshop 3: Runtime Security (Coming Soon)
+2. Workshop 5: Network Security (Coming Soon)
 
 ### Advanced Track
-1. Complete Workshops 1-6
-2. Workshop 7: Final Project
-3. Apply in real-world scenarios
+1. Workshop 6: Supply Chain Security (Coming Soon)
+2. Workshop 7: Final Project (Coming Soon)
 
 ---
 
-## 🛠️ Tools & Technologies Covered
-
-- **Docker** - Container runtime
-- **Linux** - Namespaces, cgroups, capabilities
-- **Security Tools** - Trivy, Docker Bench, Falco
-- **Best Practices** - CIS Benchmarks, NIST guidelines
-- **Kubernetes** - Security concepts (where applicable)
-
----
-
-## 📊 Workshop Statistics
-
-### First Workshop Success 🎉
-**Container Security Basics - February 4, 2026**
-
-- **Registrations:** 300+ participants
-- **Countries:** 15+ countries represented
-- **Satisfaction:** 98% would recommend
-- **Completion Rate:** 85% completed hands-on labs
-- **Platform:** Google Meet
-
-*This is just the beginning! More workshops and series coming soon.*
-
----
-
-## TFD Mission
+## 🎯 TFD Mission
 
 **"Making technology education accessible, practical, and impactful for developers worldwide."**
 
@@ -277,13 +162,15 @@ We believe in:
 - 🤝 **Community-driven** content and collaboration
 - 🚀 **Continuous learning** across all tech domains
 
-Through TFD Workshop, we empower developers and engineers across security, DevOps, cloud, mobile, and architecture - helping you build better, more secure software.
+---
+
+## 🤝 Contributing
 
 We welcome contributions! Whether it's:
 
 - 🐛 **Bug reports** - Found an issue? Let us know
 - 💡 **Feature requests** - Have an idea? Share it
-- 📝 **Documentation** - Improve our docs
+- 📝 **Documentation** - Improve our materials
 - 🔧 **Code** - Submit a PR with improvements
 - 🎓 **Teaching** - Share your expertise
 
@@ -291,109 +178,48 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ---
 
-## 📜 License
+## 📚 Resources
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-You are free to:
-- ✅ Use these materials for personal learning
-- ✅ Use them in your own workshops (with attribution)
-- ✅ Modify and adapt the content
-- ✅ Share with your team or community
-
----
-
-## 🌟 Support & Community
-
-### Get Help
-- 📧 **Email:** contact@tfdevs.com
-- 💬 **Discord:** [Join our community](#)
-- 🐦 **Twitter:** [@tfdevs](https://twitter.com/tfdevs)
-- 💼 **LinkedIn:** [TFDevs](https://linkedin.com/company/tfdevs)
-
-### Stay Updated
-- 🔔 **Watch** this repo for updates
-- ⭐ **Star** if you find it helpful
-- 🔄 **Fork** to create your own version
-- 📢 **Share** with your network
-
----
-
-## 📚 Additional Resources
-
-### Official Documentation
+### Essential Reading
 - [Docker Security Best Practices](https://docs.docker.com/engine/security/)
 - [CIS Docker Benchmark](https://www.cisecurity.org/benchmark/docker)
 - [NIST Container Security Guide](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf)
-- [Kubernetes Security](https://kubernetes.io/docs/concepts/security/)
-
-### Recommended Reading
-- [Container Security by Liz Rice](https://www.oreilly.com/library/view/container-security/9781492056690/)
-- [Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html)
-- [Kubernetes Security Best Practices](https://kubernetes-security.info/)
 
 ### Security Tools
 - [Trivy](https://github.com/aquasecurity/trivy) - Vulnerability scanner
 - [Docker Bench Security](https://github.com/docker/docker-bench-security) - Security audit
 - [Falco](https://falco.org/) - Runtime security
-- [Anchore](https://anchore.com/) - Container analysis
 
 ---
 
-## 🙏 Acknowledgments
+## � License
 
-Special thanks to:
-- All **300+ participants** of Workshop 1
-- **Contributors** who helped improve the materials
-- **Open source community** for tools and resources
-- **Docker & Kubernetes** communities for documentation
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 📅 Upcoming Workshops & Series
-
-Stay tuned for announcements:
-
-### Container Security (Web Security Series)
-- **Workshop 2:** Image Security (TBA)
-- **Workshop 3:** Runtime Security (TBA)
-- **Workshop 4:** Secrets Management (TBA)
-- **Workshop 5-7:** Coming soon
-
-### Future Series
-- 🔐 **API Security Series** - RESTful API security, GraphQL security
-- 🔑 **Authentication Series** - OAuth, JWT, SSO, MFA
-- 🔧 **DevOps Series** - CI/CD security, IaC best practices
-
-Follow us on social media for updates! 📢
-
----
-
-## 🎯 Our Mission
-
-**"Making technology education accessible, practical, and impactful for developers worldwide."**
-
----
-
-## 📞 Contact
+## 📞 Contact & Community
 
 **TFDevs - Teaching for Development**
 
 - 🌐 Website: [tfdevs.com](https://tfdevs.com)
 - 📧 Email: info@tfdevs.com
-- 🎥 YouTube: [@tfdevs](https://youtube.com/@tfdevs)
-- 📘 Facebook: [TFDevs](https://facebook.com/teachingfordevelopment)
+- 🐦 Twitter: [@tfdevs](https://twitter.com/tfdevs)
+- 💬 Discord: [Join our community](#)
+
+### Stay Updated
+- ⭐ **Star** this repo for updates
+- 🔔 **Watch** for new workshop announcements
+- 🔄 **Fork** to create your own version
 
 ---
 
 <div align="center">
 
-**⭐ Star this repo to stay updated on new workshops and series!**
-
-**🔔 Watch for announcements across all TFD Workshop series**
+**⭐ Star this repo to stay updated on new workshops!**
 
 **🤝 Contribute to help developers worldwide learn and grow**
 
-[⬆ Back to Top](#tfd-workshop-)
+[⬆ Back to Top](#tfd-workshop)
 
 </div>
