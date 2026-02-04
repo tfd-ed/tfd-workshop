@@ -462,15 +462,12 @@ sudo ls -la /proc/1/ns/
 
 ```mermaid
 graph LR
-    Container["🐳 Container<br/>Process"]
-    
-    Container --> NS1["🗂️ mnt<br/>Filesystem"]
-    Container --> NS2["🌐 net<br/>Network"]
-    Container --> NS3["🔢 pid<br/>Processes"]
-    
-    Container --> NS4["🖥️ uts<br/>Hostname"]
-    Container --> NS5["💬 ipc<br/>IPC"]
-    Container --> NS6["👤 user<br/>UIDs"]
+    Container["🐳 Container"] --> NS1["🗂️ mnt"]
+    Container --> NS2["🌐 net"]
+    Container --> NS3["🔢 pid"]
+    Container --> NS4["🖥️ uts"]
+    Container --> NS5["💬 ipc"]
+    Container --> NS6["👤 user"]
     
     style Container fill:#4ecdc4
     style NS1 fill:#95e1d3
@@ -483,12 +480,14 @@ graph LR
 
 **Six types of namespaces provide container isolation:**
 
-- **mnt** - Mount namespace (filesystem isolation)
-- **net** - Network namespace (separate network stack)
-- **pid** - Process ID namespace (isolated process tree)
-- **uts** - Unix Timesharing namespace (hostname isolation)
-- **ipc** - IPC namespace (shared memory isolation)
-- **user** - User namespace (UID mapping)
+| Namespace | Icon | What It Isolates |
+|-----------|------|------------------|
+| **mnt** | 🗂️ | Filesystem mounts |
+| **net** | 🌐 | Network interfaces and IPs |
+| **pid** | 🔢 | Process IDs |
+| **uts** | 🖥️ | Hostname |
+| **ipc** | 💬 | Inter-process communication |
+| **user** | 👤 | User and group IDs |
 
 ---
 
