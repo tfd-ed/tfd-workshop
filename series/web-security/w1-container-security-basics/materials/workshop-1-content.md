@@ -160,6 +160,8 @@ graph LR
 > **VMs:** Break into one apartment? Still locked out of others  
 > **Containers:** Break through shared kernel? Access to everything
 
+---
+
 ### Real-World Impact
 
 **Kernel Vulnerability Attack Flow**
@@ -188,6 +190,8 @@ sequenceDiagram
     style Container3 fill:#ff9999
 ```
 
+**Example: CVE-2022-0847 (Dirty Pipe)**
+
 ```bash
 # If Linux kernel has CVE-2022-0847 (Dirty Pipe)
 # An attacker in ANY container can:
@@ -196,13 +200,19 @@ sequenceDiagram
 # 3. Access ALL containers on that host
 ```
 
+---
+
 **Syscall Sharing**
+
 ```bash
 # Every container syscall goes through the SAME kernel
 # No separation at the kernel level
 ```
 
+---
+
 **Demonstration: Shared Kernel**
+
 ```bash
 # Check kernel version on host
 uname -r
