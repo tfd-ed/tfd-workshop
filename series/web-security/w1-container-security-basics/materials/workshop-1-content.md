@@ -78,14 +78,14 @@ graph LR
 ```mermaid
 graph LR
     subgraph Host["Host System"]
-        HOS["Host OS"]
-        SK["⚠️ SHARED KERNEL"]
+        HOSK["Host OS + ⚠️ SHARED KERNEL"]
+        DE["Docker Engine"]
         
-        HOS --> SK
+        HOSK --> DE
         
-        SK --> C1
-        SK --> C2
-        SK --> C3
+        DE --> C1
+        DE --> C2
+        DE --> C3
     end
     
     subgraph C1["Container 1"]
@@ -109,7 +109,8 @@ graph LR
         A3 --> L3 --> NS3
     end
     
-    style SK fill:#ff6b6b
+    style HOSK fill:#ff6b6b,color:#fff
+    style DE fill:#2496ED,color:#fff
     style C1 fill:#95e1d3
     style C2 fill:#95e1d3
     style C3 fill:#95e1d3
