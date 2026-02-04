@@ -117,7 +117,7 @@ graph LR
 ```
 
 > **💡 Note for Windows & Mac Users:**  
-> If you're running Docker Desktop on Windows or macOS, Docker runs a lightweight Linux VM in the background. Your containers still share a Linux kernel - it's just the Linux kernel running inside that VM. The security concepts we discuss apply the same way: all your containers share that Linux kernel, even though your host OS is Windows or Mac.
+> If you're running Docker Desktop on Windows or macOS, Docker runs a **lightweight Linux VM** in the background. Your containers still **share a Linux kernel** - it's just the Linux kernel running inside that VM. The **security concepts we discuss apply the same way**: all your containers share that Linux kernel, even though your host OS is Windows or Mac.
 
 > **🚨 Why This Matters in Production:**  
 > In real-world production environments, containers are deployed on **Linux servers** (AWS EC2, Azure VMs, Google Cloud, on-premise servers). When you deploy your application to production, it runs directly on a Linux host kernel - no VM wrapper like Docker Desktop provides. This means:
