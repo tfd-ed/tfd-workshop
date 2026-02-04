@@ -17,87 +17,75 @@ By the end of this workshop, you will:
 **Virtual Machines Architecture:**
 
 ```mermaid
-graph TB
+graph LR
     subgraph Host["Host System"]
-        HOS["Host Operating System"]
-        HK["Host Kernel"]
-        HV["Hypervisor (VMM)"]
+        HOS["Host OS + Kernel"]
+        HV["Hypervisor"]
         
-        subgraph VM1["Virtual Machine 1"]
-            K1["Guest Kernel"]
-            A1["Application"]
-            L1["Libraries"]
-        end
+        HOS --> HV
         
-        subgraph VM2["Virtual Machine 2"]
-            K2["Guest Kernel"]
-            A2["Application"]
-            L2["Libraries"]
-        end
-        
-        subgraph VM3["Virtual Machine 3"]
-            K3["Guest Kernel"]
-            A3["Application"]
-            L3["Libraries"]
-        end
+        HV --> VM1
+        HV --> VM2
+        HV --> VM3
     end
     
-    HOS --> HK
-    HK --> HV
-    HV --> VM1
-    HV --> VM2
-    HV --> VM3
-    K1 --> A1
-    K1 --> L1
-    K2 --> A2
-    K2 --> L2
-    K3 --> A3
-    K3 --> L3
+    subgraph VM1["VM 1"]
+        K1["Guest Kernel"]
+        K1 --> A1["App + Libs"]
+    end
+    
+    subgraph VM2["VM 2"]
+        K2["Guest Kernel"]
+        K2 --> A2["App + Libs"]
+    end
+    
+    subgraph VM3["VM 3"]
+        K3["Guest Kernel"]
+        K3 --> A3["App + Libs"]
+    end
     
     style K1 fill:#ff6b6b
     style K2 fill:#ff6b6b
     style K3 fill:#ff6b6b
-    style HK fill:#4ecdc4
     style HV fill:#ffe66d
+    style HOS fill:#4ecdc4
 ```
 
 **Container Architecture:**
 
 ```mermaid
-graph TB
+graph LR
     subgraph Host["Host System"]
-        HOS["Host Operating System"]
+        HOS["Host OS"]
         SK["⚠️ SHARED KERNEL"]
         
-        subgraph C1["Container 1"]
-            A1["Application"]
-            L1["Libraries"]
-            NS1["Namespaces"]
-        end
+        HOS --> SK
         
-        subgraph C2["Container 2"]
-            A2["Application"]
-            L2["Libraries"]
-            NS2["Namespaces"]
-        end
-        
-        subgraph C3["Container 3"]
-            A3["Application"]
-            L3["Libraries"]
-            NS3["Namespaces"]
-        end
+        SK --> C1
+        SK --> C2
+        SK --> C3
     end
     
-    HOS --> SK
-    SK --> C1
-    SK --> C2
-    SK --> C3
-    A1 --> L1
-    L1 --> NS1
-    A2 --> L2
-    L2 --> NS2
-    A3 --> L3
-    L3 --> NS3
+    subgraph C1["Container 1"]
+        A1["App"]
+        L1["Libs"]
+        NS1["Namespaces"]
+        A1 --> L1 --> NS1
+    end
+    
+    subgraph C2["Container 2"]
+        A2["App"]
+        L2["Libs"]
+        NS2["Namespaces"]
+        A2 --> L2 --> NS2
+    end
+    
+    subgraph C3["Container 3"]
+        A3["App"]
+        L3["Libs"]
+        NS3["Namespaces"]
+        A3 --> L3 --> NS3
+    end
     
     style SK fill:#ff6b6b
     style C1 fill:#95e1d3
