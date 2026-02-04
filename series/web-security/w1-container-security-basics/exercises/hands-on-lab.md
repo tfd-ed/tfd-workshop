@@ -16,8 +16,14 @@
 
 Run the setup script:
 ```bash
-chmod +x lab-setup.sh
-./lab-setup.sh
+chmod +x ../scripts/lab-setup.sh
+../scripts/lab-setup.sh
+```
+
+Or from the workshop root directory:
+```bash
+chmod +x scripts/lab-setup.sh
+./scripts/lab-setup.sh
 ```
 
 This will:

@@ -14,90 +14,100 @@ By the end of this workshop, you will:
 
 ### Different Isolation Models
 
+Before diving into the architectures, let's understand two key concepts:
+
+**What is a Kernel?**
+The kernel is the core of an operating system that manages:
+- Hardware resources (CPU, memory, disk)
+- Process scheduling and management
+- System calls (how programs communicate with hardware)
+- Security and access control
+
+Think of it as the "brain" that controls everything in your system.
+
+**What is a Hypervisor?**
+A hypervisor (also called Virtual Machine Monitor) is software that:
+- Creates and runs virtual machines
+- Manages hardware resources between VMs
+- Provides strong isolation between VMs
+- Examples: VMware ESXi, KVM, Hyper-V, VirtualBox
+
+Now let's see how VMs and containers use these differently:
+
+---
+
 **Virtual Machines Architecture:**
 
 ```mermaid
-graph TB
+graph LR
     subgraph Host["Host System"]
-        HOS["Host Operating System"]
-        HK["Host Kernel"]
-        HV["Hypervisor (VMM)"]
+        HOS["Host OS + Kernel"]
+        HV["Hypervisor"]
         
-        subgraph VM1["Virtual Machine 1"]
-            K1["Guest Kernel"]
-            A1["Application"]
-            L1["Libraries"]
-        end
+        HOS --> HV
         
-        subgraph VM2["Virtual Machine 2"]
-            K2["Guest Kernel"]
-            A2["Application"]
-            L2["Libraries"]
-        end
-        
-        subgraph VM3["Virtual Machine 3"]
-            K3["Guest Kernel"]
-            A3["Application"]
-            L3["Libraries"]
-        end
+        HV --> VM1
+        HV --> VM2
+        HV --> VM3
     end
     
-    HOS --> HK
-    HK --> HV
-    HV --> VM1
-    HV --> VM2
-    HV --> VM3
-    K1 --> A1
-    K1 --> L1
-    K2 --> A2
-    K2 --> L2
-    K3 --> A3
-    K3 --> L3
+    subgraph VM1["VM 1"]
+        K1["Guest Kernel"]
+        K1 --> A1["App + Libs"]
+    end
+    
+    subgraph VM2["VM 2"]
+        K2["Guest Kernel"]
+        K2 --> A2["App + Libs"]
+    end
+    
+    subgraph VM3["VM 3"]
+        K3["Guest Kernel"]
+        K3 --> A3["App + Libs"]
+    end
     
     style K1 fill:#ff6b6b
     style K2 fill:#ff6b6b
     style K3 fill:#ff6b6b
-    style HK fill:#4ecdc4
     style HV fill:#ffe66d
+    style HOS fill:#4ecdc4
 ```
 
 **Container Architecture:**
 
 ```mermaid
-graph TB
+graph LR
     subgraph Host["Host System"]
-        HOS["Host Operating System"]
+        HOS["Host OS"]
         SK["⚠️ SHARED KERNEL"]
         
-        subgraph C1["Container 1"]
-            A1["Application"]
-            L1["Libraries"]
-            NS1["Namespaces"]
-        end
+        HOS --> SK
         
-        subgraph C2["Container 2"]
-            A2["Application"]
-            L2["Libraries"]
-            NS2["Namespaces"]
-        end
-        
-        subgraph C3["Container 3"]
-            A3["Application"]
-            L3["Libraries"]
-            NS3["Namespaces"]
-        end
+        SK --> C1
+        SK --> C2
+        SK --> C3
     end
     
-    HOS --> SK
-    SK --> C1
-    SK --> C2
-    SK --> C3
-    A1 --> L1
-    L1 --> NS1
-    A2 --> L2
-    L2 --> NS2
-    A3 --> L3
-    L3 --> NS3
+    subgraph C1["Container 1"]
+        A1["App"]
+        L1["Libs"]
+        NS1["Namespaces"]
+        A1 --> L1 --> NS1
+    end
+    
+    subgraph C2["Container 2"]
+        A2["App"]
+        L2["Libs"]
+        NS2["Namespaces"]
+        A2 --> L2 --> NS2
+    end
+    
+    subgraph C3["Container 3"]
+        A3["App"]
+        L3["Libs"]
+        NS3["Namespaces"]
+        A3 --> L3 --> NS3
+    end
     
     style SK fill:#ff6b6b
     style C1 fill:#95e1d3
@@ -129,36 +139,41 @@ graph TB
 
 ### One Kernel to Rule Them All
 
+**🏢 Virtual Machines = Separate Apartments**
+
 ```mermaid
-graph LR
-    subgraph VMs["🏢 Virtual Machines = Separate Apartments"]
-        A1["Apartment 1<br/>Own walls, locks<br/>Own kernel"]
-        A2["Apartment 2<br/>Own walls, locks<br/>Own kernel"]
-        A3["Apartment 3<br/>Own walls, locks<br/>Own kernel"]
-    end
+graph TB
+    A1["Apartment 1<br/>Own walls & locks<br/>Own kernel"]
+    A2["Apartment 2<br/>Own walls & locks<br/>Own kernel"]
+    A3["Apartment 3<br/>Own walls & locks<br/>Own kernel"]
     
-    subgraph Containers["🚪 Containers = Rooms in Same Apartment"]
-        R1["Room 1<br/>Namespace isolation"]
-        R2["Room 2<br/>Namespace isolation"]
-        R3["Room 3<br/>Namespace isolation"]
-        Door["🔑 Shared Front Door<br/>SINGLE KERNEL"]
-        
-        R1 --> Door
-        R2 --> Door
-        R3 --> Door
-    end
-    
-    style Door fill:#ff6b6b,color:#fff
     style A1 fill:#4ecdc4
     style A2 fill:#4ecdc4
     style A3 fill:#4ecdc4
+```
+
+> Break into one apartment? Still locked out of others
+
+**🚪 Containers = Rooms in Same Apartment**
+
+```mermaid
+graph TB
+    R1["Room 1<br/>Namespace isolation"]
+    R2["Room 2<br/>Namespace isolation"]
+    R3["Room 3<br/>Namespace isolation"]
+    Door["🔑 Shared Front Door<br/>SINGLE KERNEL"]
+    
+    R1 --> Door
+    R2 --> Door
+    R3 --> Door
+    
+    style Door fill:#ff6b6b,color:#fff
     style R1 fill:#ffe66d
     style R2 fill:#ffe66d
     style R3 fill:#ffe66d
 ```
 
-> **VMs:** Break into one apartment? Still locked out of others  
-> **Containers:** Break through shared kernel? Access to everything
+> Break through shared kernel? Access to everything
 
 ---
 
@@ -182,12 +197,6 @@ sequenceDiagram
     SharedKernel->>Container3: 5. Access Container 3
     
     Note over SharedKernel: ⚠️ Single kernel = Single point of failure
-    
-    style SharedKernel fill:#ff6b6b,color:#fff
-    style Host fill:#ff9999
-    style Container1 fill:#ffcc99
-    style Container2 fill:#ff9999
-    style Container3 fill:#ff9999
 ```
 
 **Example: CVE-2022-0847 (Dirty Pipe)**
@@ -240,28 +249,30 @@ docker run ubuntu uname -r
 
 Containers provide **process isolation**, not **security isolation**.
 
+**✅ What Containers ARE Good For**
+
 ```mermaid
 graph TB
-    subgraph Good["✅ What Containers ARE Good For"]
-        G1["📦 Packaging Applications"]
-        G2["🔧 Dependency Isolation"]
-        G3["⚡ Resource Limits<br/>(CPU, Memory)"]
-        G4["🚀 Portability"]
-    end
+    G1["📦 Packaging Applications"]
+    G2["🔧 Dependency Isolation"]
+    G3["⚡ Resource Limits<br/>(CPU, Memory)"]
+    G4["🚀 Portability"]
     
-    subgraph Bad["❌ What Containers ARE NOT Designed For"]
-        B1["🚫 Running Untrusted Code"]
-        B2["🚫 Multi-tenant Security"]
-        B3["🚫 Kernel Exploit Protection"]
-        B4["🚫 Replacing Security Boundaries"]
-    end
-    
-    style Good fill:#d4edda
-    style Bad fill:#f8d7da
     style G1 fill:#c3e6cb
     style G2 fill:#c3e6cb
     style G3 fill:#c3e6cb
     style G4 fill:#c3e6cb
+```
+
+**❌ What Containers ARE NOT Designed For**
+
+```mermaid
+graph TB
+    B1["🚫 Running Untrusted Code"]
+    B2["🚫 Multi-tenant Security"]
+    B3["🚫 Kernel Exploit Protection"]
+    B4["🚫 Replacing Security Boundaries"]
+    
     style B1 fill:#f5c6cb
     style B2 fill:#f5c6cb
     style B3 fill:#f5c6cb
@@ -451,30 +462,32 @@ sudo ls -la /proc/1/ns/
 
 ```mermaid
 graph LR
-    Container["Container Process"]
-    
-    Container --> MNT["🗂️ mnt<br/>Filesystem<br/>Isolation"]
-    Container --> NET["🌐 net<br/>Network<br/>Stack"]
-    Container --> PID["🔢 pid<br/>Process<br/>Tree"]
-    Container --> UTS["🖥️ uts<br/>Hostname<br/>Isolation"]
-    Container --> IPC["💬 ipc<br/>Shared<br/>Memory"]
-    Container --> USER["👤 user<br/>UID<br/>Mapping"]
+    Container["🐳 Container"] --> NS1["🗂️ mnt"]
+    Container --> NS2["🌐 net"]
+    Container --> NS3["🔢 pid"]
+    Container --> NS4["🖥️ uts"]
+    Container --> NS5["💬 ipc"]
+    Container --> NS6["👤 user"]
     
     style Container fill:#4ecdc4
-    style MNT fill:#95e1d3
-    style NET fill:#95e1d3
-    style PID fill:#95e1d3
-    style UTS fill:#95e1d3
-    style IPC fill:#95e1d3
-    style USER fill:#95e1d3
+    style NS1 fill:#95e1d3
+    style NS2 fill:#95e1d3
+    style NS3 fill:#95e1d3
+    style NS4 fill:#95e1d3
+    style NS5 fill:#95e1d3
+    style NS6 fill:#95e1d3
 ```
 
-- **mnt** - Mount namespace (filesystem isolation)
-- **net** - Network namespace (separate network stack)
-- **pid** - Process ID namespace (isolated process tree)
-- **uts** - Unix Timesharing namespace (hostname isolation)
-- **ipc** - IPC namespace (shared memory isolation)
-- **user** - User namespace (UID mapping)
+**Six types of namespaces provide container isolation:**
+
+| Namespace | Icon | What It Isolates |
+|-----------|------|------------------|
+| **mnt** | 🗂️ | Filesystem mounts |
+| **net** | 🌐 | Network interfaces and IPs |
+| **pid** | 🔢 | Process IDs |
+| **uts** | 🖥️ | Hostname |
+| **ipc** | 💬 | Inter-process communication |
+| **user** | 👤 | User and group IDs |
 
 ---
 
@@ -497,140 +510,24 @@ docker run --rm ubuntu sysctl -a | head -20
 
 ## 🔬 Hands-On Exercises
 
-### Lab Setup
+Ready to practice what you've learned? Complete the hands-on exercises to reinforce these concepts.
 
-Create a file `lab-setup.sh`:
+**[📖 View Hands-On Exercises →](../exercises/hands-on-lab.md)**
 
+The exercises include:
+- **Exercise 1:** Verify Shared Kernel
+- **Exercise 2:** Inspect Process Tree
+- **Exercise 3:** Explore Namespaces
+- **Exercise 4:** What's Shared vs Isolated
+- **Exercise 5:** Understanding Container Boundaries
+
+**[🚀 Lab Setup Script →](../scripts/lab-setup.sh)**
+
+Run the setup script to prepare your environment:
 ```bash
-#!/bin/bash
-
-echo "Setting up Container Security Lab 1..."
-
-# Pull required images
-docker pull ubuntu:latest
-docker pull alpine:latest
-docker pull nginx:latest
-
-# Create demo containers
-docker run -d --name web1 nginx
-docker run -d --name web2 nginx
-docker run -d --name alpine-demo alpine sleep 3600
-
-echo "Lab setup complete!"
-echo ""
-echo "Available containers:"
-docker ps --format "table {{.Names}}\t{{.Image}}\t{{.Status}}"
+chmod +x ../scripts/lab-setup.sh
+../scripts/lab-setup.sh
 ```
-
----
-
-### Exercise 1: Verify Shared Kernel
-
-**Task:** Prove that all containers share the same kernel.
-
-```bash
-# 1. Check your host kernel version
-uname -r
-
-# 2. Run these three commands and compare:
-docker run --rm ubuntu uname -r
-docker run --rm alpine uname -r
-docker exec web1 uname -r
-
-# 3. Observe the results
-```
-
-**What you should see:** All commands show the same kernel version because containers share the host's kernel.
-
----
-
-### Exercise 2: Inspect Process Tree
-
-**Task:** View container processes from both inside and outside.
-
-```bash
-# 1. Get the container's host PID
-docker inspect -f '{{.State.Pid}}' web1
-
-# 2. View process from host
-ps aux | grep nginx
-
-# 3. View process from inside container
-docker exec web1 ps aux
-
-# 4. What's different about the PID?
-#    Host: Shows actual system PID (e.g., 15234)
-#    Container: Shows virtualized PID (usually PID 1)
-
-# 5. Check parent process
-HOST_PID=$(docker inspect -f '{{.State.Pid}}' web1)
-ps -p $HOST_PID -o pid,ppid,command
-
-# Question: What's the parent PID? 
-# 4. What's the difference between the PIDs?
-#    Host: Shows actual system PID (e.g., 15234)
-#    Container: Shows virtualized PID (usually PID 1)
-
-# 5. Check parent process
-HOST_PID=$(docker inspect -f '{{.State.Pid}}' web1)
-ps -p $HOST_PID -o pid,ppid,command
-
-# What's the parent PID? It should be dockerd or containerd
-```
-
----
-
-### Exercise 3: Explore /proc Filesystem
-
-**Task:** Identify what's shared vs isolated.
-
-```bash
-# 1. Enter the alpine container
-docker exec -it alpine-demo sh
-
-# 2. Inside container, run these commands:
-cat /proc/version        # Kernel version (shared)
-cat /proc/cpuinfo        # CPU info (shared)
-hostname                 # Hostname (isolated)
-cat /proc/meminfo        # Memory info (shared but limited)
-ip addr                  # Network (isolated)
-
-# 3. Exit container and compare with host:
-exit
-cat /proc/version
-hostname
-ip addr
-```
-
-**What you should observe:**
-- **Shared:** Kernel version, CPU info, kernel parameters
-- **Isolated:** Hostname, network interfaces, process tree, mount points
-
----
-
-### Exercise 4: Understanding Container Boundaries
-
-**Task:** See how container permissions work (safely).
-
-```bash
-# 1. Run a container with host filesystem access
-docker run -it --rm -v /:/host ubuntu bash
-
-# 2. Inside container:
-ls /host
-# You can see the ENTIRE host filesystem!
-
-cd /host/root
-ls -la
-# Access depends on container privileges
-
-# 3. Exit and observe
-exit
-
-# This demonstrates: containers are only as secure as you configure them
-```
-
-**Reflection:** What could happen if a malicious container had this level of access?
 
 ---
 
