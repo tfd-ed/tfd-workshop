@@ -35,17 +35,6 @@ CI/CD, Infrastructure as Code, and automation
 #### **Software Architecture Series** - 🔜 Coming Soon
 Microservices, scalability, and design patterns
 
----
-
-## Why Container Security?
-
-Container security is critical in modern DevOps, yet many developers and engineers lack proper knowledge of security best practices. This 7-part workshop series bridges that gap with:
-
-- **Practical, hands-on learning** - Real commands, real scenarios
-- **Progressive curriculum** - From basics to advanced topics
-- **Live demonstrations** - See security issues in action
-- **Industry best practices** - Production-ready knowledge
-- **Free and open-source** - All materials available to the community
 
 ---
 
