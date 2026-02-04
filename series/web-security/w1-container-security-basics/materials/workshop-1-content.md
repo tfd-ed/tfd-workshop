@@ -116,6 +116,17 @@ graph LR
     style C3 fill:#95e1d3
 ```
 
+> **💡 Note for Windows & Mac Users:**  
+> If you're running Docker Desktop on Windows or macOS, Docker runs a lightweight Linux VM in the background. Your containers still share a Linux kernel - it's just the Linux kernel running inside that VM. The security concepts we discuss apply the same way: all your containers share that Linux kernel, even though your host OS is Windows or Mac.
+
+> **🚨 Why This Matters in Production:**  
+> In real-world production environments, containers are deployed on **Linux servers** (AWS EC2, Azure VMs, Google Cloud, on-premise servers). When you deploy your application to production, it runs directly on a Linux host kernel - no VM wrapper like Docker Desktop provides. This means:
+> - A kernel vulnerability can compromise **all containers AND the host server**
+> - One compromised container can potentially access **other applications** on the same server
+> - Understanding shared kernel security is **critical** for production deployments
+> 
+> This workshop teaches you the security implications you'll face when your containers run in real production infrastructure, not just on your laptop.
+
 ### Understanding the Key Differences
 
 **VMs virtualize hardware, containers virtualize the operating system.**
