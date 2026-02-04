@@ -19,11 +19,11 @@
 
 ### Current & Upcoming Workshop Series
 
-#### **Web Security Series** - *IN PROGRESS*
+#### **[Web Security Series](./series/web-security/README.md)** - *IN PROGRESS*
 Master security in web applications and containerized environments
 
 - **Container Security** (7 workshops) - Currently running
-  - Workshop 1: Container Security Basics ✅ Completed (Feb 4, 2026) | [Materials](./series/web-security/w1-container-security-basics/materials/workshop-1-content.md) | [Recording](#)
+  - Workshop 1: Container Security Basics ✅ Completed (Feb 4, 2026) | [Materials](./series/web-security/w1-container-security-basics/materials/workshop-1-content.md) | [Recording(Coming Soon)](#)
   - Workshops 2-7: Coming soon
 - **API Security** (5 workshops) - 🚧 Coming soon
 - **Authentication & Authorization** (4 workshops) - 🚧 Coming soon
@@ -46,59 +46,6 @@ Container security is critical in modern DevOps, yet many developers and enginee
 - **Live demonstrations** - See security issues in action
 - **Industry best practices** - Production-ready knowledge
 - **Free and open-source** - All materials available to the community
-
----
-
-## 📋 Container Security Workshop Series
-
-### Workshop 1: Container Security Basics ✅ 
-**Completed:** February 4, 2026 | **Participants:** 300+ | **Level:** Beginner
-
-Learn the fundamentals of container security, shared kernel risks, and common security myths.
-
-**[📖 View Workshop Details →](./series/web-security/w1-container-security-basics/README.md)**
-
----
-
-### Workshop 2: Image Security & Attack Surface 🚧
-**Status:** Coming Soon | **Level:** Beginner
-
-Vulnerable images, CVE scanning, and building minimal secure containers.
-
----
-
-### Workshop 3: Runtime Security & Privileged Containers 🚧
-**Status:** Coming Soon | **Level:** Intermediate
-
-Linux capabilities, container escape scenarios, and running as non-root.
-
----
-
-### Workshop 4: Secrets & Configuration Security 🚧
-**Status:** Coming Soon | **Level:** Intermediate
-
-Secrets management, environment variables, and avoiding credential leaks.
-
----
-
-### Workshop 5: Network & Access Control 🚧
-**Status:** Coming Soon | **Level:** Intermediate
-
-Container networking, isolation patterns, and zero-trust principles.
-
----
-
-### Workshop 6: Supply Chain & CI/CD Risks 🚧
-**Status:** Coming Soon | **Level:** Advanced
-
-Image signing, dependency vulnerabilities, and CI/CD security.
-
----
-
-### Workshop 7: Final Project - Secure the Broken App 🚧
-**Status:** Coming Soon | **Level:** All Levels
-
-Hands-on challenge: Harden a deliberately insecure containerized application.
 
 ---
 

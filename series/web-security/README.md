@@ -1,299 +1,274 @@
-# Container Security Workshop Series
+# Web Security Series - Container Security
 
-## 📚 Complete Workshop Series
+[![Status](https://img.shields.io/badge/Status-In%20Progress-yellow.svg)]()
+[![Docker](https://img.shields.io/badge/Docker-Required-2496ED?logo=docker)](https://www.docker.com/)
+[![Workshops](https://img.shields.io/badge/Workshops-7%20Total-blue.svg)]()
 
-A comprehensive hands-on workshop series covering practical container security from basics to advanced topics.
+> A comprehensive hands-on workshop series covering practical container security from basics to advanced topics.
 
-**Total Duration:** 6-8 hours (7 workshops)  
-**Format:** Live online workshops  
-**Audience:** Developers, DevOps beginners, CS students  
-**Requirement:** Laptop with Docker installed
+**Total Duration:** 6-8 hours | **Format:** Live online | **Level:** Beginner to Advanced
 
 ---
 
-## 🗂️ Workshop Structure
+## 🎯 Series Overview
+
+Container security is critical in modern DevOps, yet many developers lack proper knowledge of security best practices. This 7-part workshop series bridges that gap through hands-on learning, live demonstrations, and real-world scenarios.
+
+### What You'll Master
+
+- 🔐 **Container fundamentals** - Security architecture and isolation models
+- 🖼️ **Image security** - Building and scanning secure container images  
+- ⚙️ **Runtime protection** - Capabilities, privileges, and container escapes
+- 🔑 **Secrets management** - Proper handling of sensitive data
+- 🌐 **Network security** - Isolation patterns and access control
+- 🔗 **Supply chain** - CI/CD security and dependency management
+- 🛡️ **Defense in depth** - Applying all concepts in practice
+
+---
+
+## � Workshop Structure
 
 ```
 web-security/
 ├── README.md (this file)
 ├── w1-container-security-basics/
-├── w2-image-security-attack-surface/
-├── w3-runtime-security-privileged-containers/
-├── w4-secrets-configuration-security/
-├── w5-network-access-control/
-├── w6-supply-chain-cicd-risks/
-└── w7-final-secure-broken-app/
+│   ├── README.md
+│   ├── materials/
+│   ├── exercises/
+│   └── scripts/
+├── w2-image-security-attack-surface/ (Coming Soon)
+├── w3-runtime-security-privileged-containers/ (Coming Soon)
+├── w4-secrets-configuration-security/ (Coming Soon)
+├── w5-network-access-control/ (Coming Soon)
+├── w6-supply-chain-cicd-risks/ (Coming Soon)
+└── w7-final-secure-broken-app/ (Coming Soon)
 ```
-
-Each workshop folder contains:
-- `README.md` - Workshop overview
-- `materials/` - Teaching content and slides
-- `scripts/` - Demo and setup scripts
-- `exercises/` - Hands-on lab guides
 
 ---
 
-## 📖 Workshops
+## 📋 Workshop Series
 
-### [Workshop 1: Container Security Basics](w1-container-security-basics/)
-**Duration:** 1 hour  
-**Status:** ✅ Complete
+### [Workshop 1: Container Security Basics](w1-container-security-basics/) ✅
+**Completed:** February 4, 2026 | **Duration:** 2.5 hours | **Participants:** 300+
+
+Learn container security fundamentals, shared kernel risks, and common security myths.
 
 **Topics:**
 - Containers vs VMs (security perspective)
-- Shared kernel risks
-- Security boundaries
-- Common security myths
+- Shared kernel risks and implications
+- Container isolation boundaries
+- Common security myths debunked
 
-**Key Takeaway:** Containers share the host kernel - understand the fundamental security limitations.
+**[📖 View Workshop Details →](w1-container-security-basics/README.md)**
 
 ---
 
-### Workshop 2: Image Security & Attack Surface
-**Duration:** 1 hour  
-**Status:** 🚧 Coming soon
+### Workshop 2: Image Security & Attack Surface 🚧
+**Status:** Coming Soon | **Duration:** 1 hour | **Level:** Beginner
+
+Reduce attack surface before containers even run.
 
 **Topics:**
 - How vulnerable images happen
-- `latest` tag problems
-- Alpine vs Ubuntu vs distroless
-- CVE scanning basics
-
-**Key Takeaway:** Reduce attack surface before containers even run.
+- The `latest` tag problem
+- Alpine vs Ubuntu vs Distroless
+- CVE scanning and vulnerability detection
 
 ---
 
-### Workshop 3: Runtime Security & Privileged Containers
-**Duration:** 1-1.5 hours  
-**Status:** 🚧 Coming soon
+### Workshop 3: Runtime Security & Privileged Containers 🚧
+**Status:** Coming Soon | **Duration:** 1-1.5 hours | **Level:** Intermediate
+
+Understand and mitigate runtime security risks.
 
 **Topics:**
 - Linux capabilities explained
 - Why `--privileged` is dangerous
-- Container escape examples
-- Running as non-root
-
-**Key Takeaway:** Understand and mitigate runtime security risks.
+- Container escape scenarios
+- Running containers as non-root
 
 ---
 
-### Workshop 4: Secrets & Configuration Security
-**Duration:** 1 hour  
-**Status:** 🚧 Coming soon
+### Workshop 4: Secrets & Configuration Security 🚧
+**Status:** Coming Soon | **Duration:** 1 hour | **Level:** Intermediate
+
+Never commit secrets - use proper secret management.
 
 **Topics:**
 - Why secrets in images are dangerous
-- Environment variables vs mounted files
-- Secret management best practices
-- Basic secret rotation
-
-**Key Takeaway:** Never commit secrets - use proper secret management.
+- Environment variables vs mounted secrets
+- Docker secrets & Kubernetes secrets
+- Secret rotation strategies
 
 ---
 
-### Workshop 5: Network & Access Control
-**Duration:** 1 hour  
-**Status:** 🚧 Coming soon
+### Workshop 5: Network & Access Control 🚧
+**Status:** Coming Soon | **Duration:** 1 hour | **Level:** Intermediate
+
+Limit blast radius through network isolation.
 
 **Topics:**
-- Container networking recap
+- Container networking security
 - Port exposure risks
-- Network isolation
-- Service segmentation
-
-**Key Takeaway:** Limit blast radius through network isolation.
+- Network isolation patterns
+- Service segmentation and zero-trust
 
 ---
 
-### Workshop 6: Supply Chain & CI/CD Risks
-**Duration:** 1 hour  
-**Status:** 🚧 Coming soon
+### Workshop 6: Supply Chain & CI/CD Risks 🚧
+**Status:** Coming Soon | **Duration:** 1 hour | **Level:** Advanced
+
+Secure the entire container supply chain.
 
 **Topics:**
-- Image poisoning
-- Dependency risks
+- Image poisoning attacks
+- Dependency vulnerabilities
 - Tag immutability
-- CI/CD security
-
-**Key Takeaway:** Secure the entire container supply chain.
+- Container signing & verification
+- CI/CD security best practices
 
 ---
 
-### Workshop 7: Secure the Broken App (Final Project)
-**Duration:** 1-1.5 hours  
-**Status:** 🚧 Coming soon
+### Workshop 7: Final Project - Secure the Broken App 🚧
+**Status:** Coming Soon | **Duration:** 1-1.5 hours | **Level:** All Levels
 
-**Format:** Hands-on security challenge
-
-Students receive:
-- Insecure Dockerfile
-- Exposed secrets
-- Privileged container
-- Open network access
+Hands-on security challenge: Fix a deliberately insecure containerized application.
 
 **Tasks:**
-- Harden the image
-- Remove privileges
-- Secure secrets
-- Isolate network
-
-**Key Takeaway:** Apply all learned concepts to secure a real application.
-
----
-
-## 🎯 Learning Path
-
-```
-Workshop 1 (Basics)
-    ↓
-Workshop 2 (Images)
-    ↓
-Workshop 3 (Runtime)
-    ↓
-Workshop 4 (Secrets)
-    ↓
-Workshop 5 (Network)
-    ↓
-Workshop 6 (Supply Chain)
-    ↓
-Workshop 7 (Final Project)
-```
-
-**Recommended:** Complete workshops in order as each builds on previous concepts.
-
----
-
-## 🔄 Workshop Format
-
-Each workshop follows the same structure:
-
-1. **Concept** (15-20 min) - Teaching with visuals
-2. **Live Demo** (15 min) - Instructor demonstration
-3. **Hands-On Lab** (20-30 min) - Student exercises
-4. **Discussion** (10 min) - Q&A and wrap-up
-
----
-
-## 🛠️ Prerequisites
-
-### Technical Requirements
-- Docker installed and running
-- Basic command line knowledge
-- Terminal access
-- Internet connection
-
-### Verify Your Setup
-```bash
-docker --version
-docker ps
-docker run --rm hello-world
-```
-
-### Recommended Knowledge
-- Basic understanding of containers
-- Linux command line basics
-- Basic networking concepts
-
----
-
-## 🎓 Teaching Style
-
-- ✅ **Hands-on first** - Learn by doing
-- ✅ **Break things safely** - Understand vulnerabilities
-- ✅ **Real-world focus** - Practical, not theoretical
-- ✅ **Attacker mindset** - Think "what if attacker..."
-- ✅ **No heavy theory** - Concepts explained simply
-
----
-
-## 📚 Additional Resources
-
-### Official Documentation
-- [Docker Security](https://docs.docker.com/engine/security/)
-- [CIS Docker Benchmark](https://www.cisecurity.org/benchmark/docker)
-- [NIST Container Security Guide](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf)
-- [Kubernetes Security](https://kubernetes.io/docs/concepts/security/)
-
-### Security Tools
-- [Docker Bench Security](https://github.com/docker/docker-bench-security)
-- [Trivy](https://github.com/aquasecurity/trivy) - Vulnerability scanner
-- [Falco](https://falco.org/) - Runtime security
-- [Anchore](https://anchore.com/) - Container analysis
-
-### Further Reading
-- [Container Security by Liz Rice](https://www.oreilly.com/library/view/container-security/9781492056690/)
-- [Kubernetes Security](https://kubernetes-security.info/)
-- [Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html)
+- Harden vulnerable Dockerfiles
+- Remove excessive privileges
+- Implement proper secret management
+- Configure network isolation
+- Apply defense-in-depth strategies
 
 ---
 
 ## 🚀 Getting Started
 
-### For Instructors
+### Prerequisites
 
-1. Review the workshop materials in each folder
-2. Test demo scripts before the workshop
-3. Prepare your environment
-4. Set up screen sharing for online delivery
+- Docker installed and running
+- Basic Linux command line knowledge
+- Terminal access
+- Text editor (VS Code, Vim, etc.)
+- Internet connection
 
-### For Students
+### Quick Start
 
-1. Ensure Docker is installed and working
-2. Start with Workshop 1
-3. Complete hands-on exercises
-4. Ask questions during discussion time
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/KimangKhenng/tfd-workshop.git
+   cd container-security-workshop-series/series/web-security
+   ```
+
+2. **Start with Workshop 1:**
+   ```bash
+   cd w1-container-security-basics
+   cat README.md
+   ```
+
+3. **Verify your Docker setup:**
+   ```bash
+   docker --version
+   docker run --rm hello-world
+   ```
+
+---
+
+## 🎓 Learning Path
+
+We recommend completing workshops in order as each builds on previous concepts:
+
+```mermaid
+graph LR
+    W1[Workshop 1<br/>Basics] --> W2[Workshop 2<br/>Images]
+    W2 --> W3[Workshop 3<br/>Runtime]
+    W3 --> W4[Workshop 4<br/>Secrets]
+    W4 --> W5[Workshop 5<br/>Network]
+    W5 --> W6[Workshop 6<br/>Supply Chain]
+    W6 --> W7[Workshop 7<br/>Final Project]
+    
+    style W1 fill:#90EE90
+    style W2 fill:#FFE4B5
+    style W3 fill:#FFE4B5
+    style W4 fill:#FFE4B5
+    style W5 fill:#FFE4B5
+    style W6 fill:#FFE4B5
+    style W7 fill:#FFE4B5
+```
+
+### Recommended Tracks
+
+**Beginner Track:**
+1. Workshop 1: Container Security Basics
+2. Workshop 2: Image Security
+3. Workshop 4: Secrets Management
+
+**Intermediate Track:**
+1. Workshop 3: Runtime Security
+2. Workshop 5: Network Security
+
+**Advanced Track:**
+1. Workshop 6: Supply Chain Security
+2. Workshop 7: Final Project
 
 ---
 
 ## 🎯 Learning Outcomes
 
-After completing all workshops, students will be able to:
+After completing this series, you will be able to:
 
-- ✅ Explain container security fundamentals
-- ✅ Build secure container images
-- ✅ Configure runtime security controls
-- ✅ Manage secrets properly
-- ✅ Implement network isolation
-- ✅ Secure CI/CD pipelines
-- ✅ Apply defense-in-depth strategies
-
----
-
-## 💡 Workshop Tips
-
-### For Online Delivery
-
-1. **Engagement**
-   - Use polls and questions
-   - Encourage chat participation
-   - Share your screen with large fonts
-
-2. **Pacing**
-   - Build in buffer time
-   - Check for questions frequently
-   - Don't rush hands-on sections
-
-3. **Support**
-   - Monitor chat for issues
-   - Provide clear troubleshooting steps
-   - Have backup plans for technical issues
+✅ Explain container security fundamentals and isolation models  
+✅ Build and scan secure container images  
+✅ Configure runtime security controls and capabilities  
+✅ Implement proper secrets management  
+✅ Design network isolation and access control  
+✅ Secure CI/CD pipelines and supply chains  
+✅ Apply defense-in-depth security strategies  
 
 ---
 
-## 📧 Feedback & Contributions
+## 📚 Resources
 
-- Found an issue? Open an issue
-- Have improvements? Submit a pull request
-- Questions? Start a discussion
+### Official Documentation
+- [Docker Security Best Practices](https://docs.docker.com/engine/security/)
+- [CIS Docker Benchmark](https://www.cisecurity.org/benchmark/docker)
+- [NIST Container Security Guide](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-190.pdf)
+- [Kubernetes Security](https://kubernetes.io/docs/concepts/security/)
+
+### Security Tools
+- [Trivy](https://github.com/aquasecurity/trivy) - Vulnerability scanner
+- [Docker Bench Security](https://github.com/docker/docker-bench-security) - Security audit
+- [Falco](https://falco.org/) - Runtime security
+- [Anchore](https://anchore.com/) - Container analysis
+
+### Recommended Reading
+- [Container Security by Liz Rice](https://www.oreilly.com/library/view/container-security/9781492056690/)
+- [Docker Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html)
+- [Kubernetes Security Best Practices](https://kubernetes-security.info/)
 
 ---
 
-## 📄 License
+## 🤝 Contributing
 
-Educational use - feel free to adapt and share with attribution.
+Found an issue or have suggestions? We welcome contributions!
+
+- 🐛 [Report bugs](https://github.com/KimangKhenng/tfd-workshop/issues)
+- 💡 [Request features](https://github.com/KimangKhenng/tfd-workshop/issues)
+- 📝 [Improve documentation](https://github.com/KimangKhenng/tfd-workshop/pulls)
 
 ---
 
-**Ready to start?** 🚀
+## 📜 License
 
-Begin with [Workshop 1: Container Security Basics](w1-container-security-basics/)
+This workshop series is part of the TFD Workshop and is licensed under the MIT License.
+
+---
+
+<div align="center">
+
+**[⬅ Back to Main README](../../README.md)** | **[Start Workshop 1 →](w1-container-security-basics/README.md)**
+
+Part of the [TFD Workshop Series](https://github.com/KimangKhenng/tfd-workshop)
+
+</div>
