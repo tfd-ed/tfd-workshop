@@ -14,6 +14,28 @@ By the end of this workshop, you will:
 
 ### Different Isolation Models
 
+Before diving into the architectures, let's understand two key concepts:
+
+**What is a Kernel?**
+The kernel is the core of an operating system that manages:
+- Hardware resources (CPU, memory, disk)
+- Process scheduling and management
+- System calls (how programs communicate with hardware)
+- Security and access control
+
+Think of it as the "brain" that controls everything in your system.
+
+**What is a Hypervisor?**
+A hypervisor (also called Virtual Machine Monitor) is software that:
+- Creates and runs virtual machines
+- Manages hardware resources between VMs
+- Provides strong isolation between VMs
+- Examples: VMware ESXi, KVM, Hyper-V, VirtualBox
+
+Now let's see how VMs and containers use these differently:
+
+---
+
 **Virtual Machines Architecture:**
 
 ```mermaid
