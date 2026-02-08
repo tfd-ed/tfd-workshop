@@ -9,6 +9,8 @@ By the end of this workshop, you will:
 - Be able to inspect container isolation boundaries
 
 ---
+Video recording of the workshop: [YouTube Link](https://www.youtube.com/watch?v=Refr3uDVJpc)
+---
 
 ## 📚 Part 1: Containers vs VMs (Security View)
 

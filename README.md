@@ -23,7 +23,7 @@
 Master security in web applications and containerized environments
 
 - **Container Security** (7 workshops) - Currently running
-  - Workshop 1: Container Security Basics ✅ Completed (Feb 4, 2026) | [Materials](./series/web-security/w1-container-security-basics/materials/workshop-1-content.md) | [Recording(Coming Soon)](#)
+  - Workshop 1: Container Security Basics ✅ Completed (Feb 4, 2026) | [Materials](./series/web-security/w1-container-security-basics/materials/workshop-1-content.md) | [Recording](https://www.youtube.com/watch?v=Refr3uDVJpc)
   - Workshops 2-7: Coming soon
 - **API Security** (5 workshops) - 🚧 Coming soon
 - **Authentication & Authorization** (4 workshops) - 🚧 Coming soon
