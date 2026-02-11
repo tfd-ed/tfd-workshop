@@ -1596,44 +1596,14 @@ High-dimensional observation
 
 <table>
 <tr>
-<td align="center" width="33%">
-<img src="https://gymnasium.farama.org/_images/humanoid.gif" width="200"/><br/>
-<b>Humanoid</b><br/>
-<i>Bipedal locomotion</i><br/>
-21 DOF, complex physics
-</td>
-<td align="center" width="33%">
-<img src="https://gymnasium.farama.org/_images/ant.gif" width="200"/><br/>
-<b>Ant</b><br/>
-<i>Quadruped walking</i><br/>
-8 DOF, stable gaits
-</td>
-<td align="center" width="33%">
-<img src="https://gymnasium.farama.org/_images/half_cheetah.gif" width="200"/><br/>
-<b>HalfCheetah</b><br/>
-<i>Fast running</i><br/>
-6 DOF, speed optimization
-</td>
+<td align="center" width="33%"><img src="https://gymnasium.farama.org/_images/humanoid.gif" width="200"/><br/><b>Humanoid</b><br/><i>Bipedal locomotion</i><br/>21 DOF, complex physics</td>
+<td align="center" width="33%"><img src="https://gymnasium.farama.org/_images/ant.gif" width="200"/><br/><b>Ant</b><br/><i>Quadruped walking</i><br/>8 DOF, stable gaits</td>
+<td align="center" width="33%"><img src="https://gymnasium.farama.org/_images/half_cheetah.gif" width="200"/><br/><b>HalfCheetah</b><br/><i>Fast running</i><br/>6 DOF, speed optimization</td>
 </tr>
 <tr>
-<td align="center" width="33%">
-<img src="https://gymnasium.farama.org/_images/hopper.gif" width="200"/><br/>
-<b>Hopper</b><br/>
-<i>One-legged hopping</i><br/>
-3 DOF, balance challenge
-</td>
-<td align="center" width="33%">
-<img src="https://gymnasium.farama.org/_images/walker2d.gif" width="200"/><br/>
-<b>Walker2D</b><br/>
-<i>Bipedal walking</i><br/>
-6 DOF, efficient gait
-</td>
-<td align="center" width="33%">
-<img src="https://gymnasium.farama.org/_images/swimmer.gif" width="200"/><br/>
-<b>Swimmer</b><br/>
-<i>Aquatic locomotion</i><br/>
-2 DOF, fluid dynamics
-</td>
+<td align="center" width="33%"><img src="https://gymnasium.farama.org/_images/hopper.gif" width="200"/><br/><b>Hopper</b><br/><i>One-legged hopping</i><br/>3 DOF, balance challenge</td>
+<td align="center" width="33%"><img src="https://gymnasium.farama.org/_images/walker2d.gif" width="200"/><br/><b>Walker2D</b><br/><i>Bipedal walking</i><br/>6 DOF, efficient gait</td>
+<td align="center" width="33%"><img src="https://gymnasium.farama.org/_images/swimmer.gif" width="200"/><br/><b>Swimmer</b><br/><i>Aquatic locomotion</i><br/>2 DOF, fluid dynamics</td>
 </tr>
 </table>
 
