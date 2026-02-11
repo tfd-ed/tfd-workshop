@@ -31,7 +31,9 @@ This is **Reinforcement Learning** in a nutshell. An **agent** (the dog) learns 
 
 ### The RL Framework
 
+<div align="center">
 <img src="https://miro.medium.com/v2/resize:fit:1400/format:webp/0*L2rL_mxm5P00wXRz.jpg" alt="RL Framework" width="600"/>
+</div>
 
 **Key Components:**
 
