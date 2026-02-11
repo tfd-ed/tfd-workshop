@@ -628,6 +628,33 @@ PPO: "Just don't go more than 10% faster or slower than you were going. Simple!"
 
 Now let's build PPO piece by piece, understanding each component before adding complexity.
 
+### PPO Algorithm Pseudocode
+
+Before diving into implementation details, let's see the complete PPO algorithm:
+
+<div align="center">
+<img src="../assets/pseudocode.svg" alt="PPO Algorithm Pseudocode" width="700"/>
+</div>
+
+*Figure: PPO algorithm pseudocode from [OpenAI Spinning Up](https://spinningup.openai.com/en/latest/algorithms/ppo.html). This shows the complete training loop including experience collection, advantage computation, and policy updates.*
+
+**Key Steps Explained:**
+
+1. **Initialize** policy network $\pi_\theta$ and value network $V_\phi$
+2. **For each iteration:**
+   - Collect trajectories by running policy in environment
+   - Compute advantages using GAE
+   - **For K epochs:**
+     - Update policy using clipped objective (multiple gradient steps on same data)
+     - Update value function to fit returns
+3. **Repeat** until convergence
+
+The pseudocode shows PPO's key innovation: **reusing the same batch of data for multiple epochs** (K=10 typically), making it much more sample-efficient than standard policy gradients while maintaining stability through clipping.
+
+**Now let's build each piece step by step!**
+
+---
+
 ### Our Target Environment: Lunar Landing
 
 ```mermaid
@@ -1164,31 +1191,6 @@ Balance between sample efficiency (reuse data) and stability (don't overfit to o
 
 ---
 
-### PPO Algorithm Pseudocode
-
-Here's the complete PPO algorithm in pseudocode form, showing how all the pieces fit together:
-
-<div align="center">
-<img src="../assets/pseudocode.svg" alt="PPO Algorithm Pseudocode" width="700"/>
-</div>
-
-*Figure: PPO algorithm pseudocode from [OpenAI Spinning Up](https://spinningup.openai.com/en/latest/algorithms/ppo.html). This shows the complete training loop including experience collection, advantage computation, and policy updates.*
-
-**Key Steps Explained:**
-
-1. **Initialize** policy network $\pi_\theta$ and value network $V_\phi$
-2. **For each iteration:**
-   - Collect trajectories by running policy in environment
-   - Compute advantages using GAE
-   - **For K epochs:**
-     - Update policy using clipped objective (multiple gradient steps on same data)
-     - Update value function to fit returns
-3. **Repeat** until convergence
-
-The pseudocode shows PPO's key innovation: **reusing the same batch of data for multiple epochs** (K=10 typically), making it much more sample-efficient than standard policy gradients while maintaining stability through clipping.
-
----
-
 ## Part 4: Understanding Through Visualization
 
 ### What Clipping Actually Does
@@ -1379,37 +1381,158 @@ def train_ppo(env_name='LunarLander-v2',
 
 ## Part 6: Live Demo - PPO in Action
 
-### Demo 1: Untrained vs Trained Agent
+### Training Configuration
 
-**[📹 INSTRUCTOR: Record and add GIF here - see INSTRUCTOR_NOTES.md for recording instructions]**
+Our demo training used these hyperparameters:
 
-**What to Observe:**
-- **Untrained agent:** Random movements, crashes immediately
-- **After 100k steps:** Starts hovering, sometimes lands
-- **After 500k steps:** Consistently smooth landings
+```python
+# PPO Configuration
+lr = 3e-4              # Learning rate
+gamma = 0.99           # Discount factor
+gae_lambda = 0.95      # GAE parameter
+clip_epsilon = 0.2     # PPO clipping parameter
+value_coef = 0.5       # Value loss coefficient
+entropy_coef = 0.01    # Entropy bonus coefficient
+max_grad_norm = 0.5    # Gradient clipping threshold
 
-### Demo 2: Training Progress Visualization
+# Training Configuration
+batch_size = 2048      # Steps per update
+n_epochs = 10          # PPO epochs per batch
+hidden_dim = 128       # Neural network hidden size
+total_episodes = 1000  # Total training episodes
+```
 
-**[📹 INSTRUCTOR: Add training curve plot here]**
+### Demo 1: Learning Progression
 
-**Expected Pattern:**
-- **Episodes 0-50:** Negative rewards (crashing)
-- **Episodes 50-200:** Rapid improvement (learning to hover)
-- **Episodes 200-500:** Plateau (mastering landing)
-- **Episodes 500+:** Consistent high rewards
+Watch how the agent improves from random crashes to smooth landings!
 
-### Demo 3: Action Distribution Evolution
+<table>
+<tr>
+<td width="50%" align="center">
 
-**[📹 INSTRUCTOR: Add action distribution heatmap here]**
+**Episode 50: Early Training** ❌
+
+<img src="../demo-assets/episode_0050_reward_-156.gif" width="300"/>
+
+**Reward: -156**
+- Random, erratic movements
+- No understanding of physics
+- Crashes immediately
+- High entropy (exploring everything)
+
+</td>
+<td width="50%" align="center">
+
+**Episode 500: Mid Training** ⚠️
+
+<img src="../demo-assets/episode_0500_reward_-50.gif" width="300"/>
+
+**Reward: -50**
+- Starting to hover
+- Learning to use engines
+- Still unstable landings
+- Reduced entropy (exploiting knowledge)
+
+</td>
+</tr>
+<tr>
+<td width="50%" align="center">
+
+**Episode 800: Late Training** ✅
+
+<img src="../demo-assets/episode_0800_reward_262.gif" width="300"/>
+
+**Reward: +262**
+- Controlled descent
+- Efficient fuel usage
+- Smooth landing
+- Low entropy (confident policy)
+
+</td>
+<td width="50%" align="center">
+
+**Final Evaluation** 🎯
+
+<img src="../demo-assets/final_eval_3_reward_274.gif" width="300"/>
+
+**Reward: +274**
+- Mastered the task
+- Optimal trajectory
+- Perfect landing between flags
+- Deterministic, reliable behavior
+
+</td>
+</tr>
+</table>
+
+### Demo 2: Training Metrics Visualization
+
+<div align="center">
+<img src="../demo-assets/training_metrics.png" width="1000"/>
+</div>
+
+**Key Observations:**
+
+**Episode Rewards (Top Left):**
+- **Episodes 0-200:** Negative rewards, agent is crashing (-400 to -100)
+- **Episodes 200-400:** Rapid improvement, learning to hover (-100 to +50)
+- **Episodes 400-600:** Breakthrough moment, successful landings (+50 to +200)
+- **Episodes 600-1000:** Mastery and consistency (+150 to +280)
+
+**Policy Loss (Top Right):**
+- Initially high and volatile (0.3-0.5)
+- Gradually stabilizes around 0.05-0.15
+- Small fluctuations indicate stable learning
+
+**Value Loss (Bottom Left):**
+- Starts high (~3000) as critic learns value estimates
+- Decreases exponentially to ~500
+- Stabilizes as value function converges
+
+**Entropy (Bottom Right):**
+- Starts high (~1.3) - pure exploration
+- Steadily decreases to ~0.3 - policy becoming deterministic
+- Healthy decay pattern indicates good exploration-exploitation balance
+
+### Demo 3: Gradient Analysis
+
+<div align="center">
+<img src="../demo-assets/gradient_analysis.png" width="1000"/>
+</div>
 
 **What This Shows:**
-- Early: Uniform distribution (exploring)
-- Middle: Peaky distribution (exploiting)
-- Late: Confident, deterministic choices
+
+**Gradient Norm Distribution (Top Left):**
+- Most gradients cluster around 0.15-0.25
+- Healthy bell-curve distribution
+- No extreme outliers (good stability)
+
+**Recent Gradient Norms (Top Right):**
+- Gradients stay well below clip threshold (0.5)
+- Consistent magnitude throughout training
+- Clipping rarely needed (stable updates)
+
+**Actor vs Critic Gradients (Bottom Left):**
+- Actor gradients slightly larger than critic
+- Points cluster near diagonal (balanced learning)
+- No gradient explosion in either network
+
+**Gradient Smoothness (Bottom Right):**
+- Smooth gradient changes over time
+- No sudden spikes or oscillations
+- Indicates stable optimization landscape
+
+### Key Takeaways from Demo
+
+1. **Learning is Non-Linear:** Agent makes breakthrough around episode 400-600
+2. **Entropy Decay:** Exploration gradually gives way to exploitation
+3. **Stable Gradients:** PPO's clipping mechanism prevents instability
+4. **Value Function Crucial:** Critic learns faster initially, enables actor improvement
+5. **Reward Variance:** Even trained agents have episode-to-episode variance
 
 ---
 
-## Part 6: Gradient Observation & Interpretation
+## Part 7: Gradient Observation & Interpretation
 
 Understanding what's happening during training is crucial for debugging!
 
