@@ -1164,6 +1164,31 @@ Balance between sample efficiency (reuse data) and stability (don't overfit to o
 
 ---
 
+### PPO Algorithm Pseudocode
+
+Here's the complete PPO algorithm in pseudocode form, showing how all the pieces fit together:
+
+<div align="center">
+<img src="../assets/pseudocode.svg" alt="PPO Algorithm Pseudocode" width="700"/>
+</div>
+
+*Figure: PPO algorithm pseudocode from [OpenAI Spinning Up](https://spinningup.openai.com/en/latest/algorithms/ppo.html). This shows the complete training loop including experience collection, advantage computation, and policy updates.*
+
+**Key Steps Explained:**
+
+1. **Initialize** policy network $\pi_\theta$ and value network $V_\phi$
+2. **For each iteration:**
+   - Collect trajectories by running policy in environment
+   - Compute advantages using GAE
+   - **For K epochs:**
+     - Update policy using clipped objective (multiple gradient steps on same data)
+     - Update value function to fit returns
+3. **Repeat** until convergence
+
+The pseudocode shows PPO's key innovation: **reusing the same batch of data for multiple epochs** (K=10 typically), making it much more sample-efficient than standard policy gradients while maintaining stability through clipping.
+
+---
+
 ## Part 4: Understanding Through Visualization
 
 ### What Clipping Actually Does
