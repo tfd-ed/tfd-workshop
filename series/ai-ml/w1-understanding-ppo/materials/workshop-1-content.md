@@ -327,7 +327,119 @@ The key difference: optimal Bellman equations include $\max$ over actions, refle
 
 ---
 
-## Part 2: Why PPO Exists
+### Two Approaches to RL: Value-Based vs Policy-Based
+
+Now that we understand the fundamentals, there are **two main strategies** for solving RL problems. Understanding this distinction is crucial for knowing why PPO exists.
+
+#### Approach 1: Value-Based Methods (e.g., Q-Learning, DQN)
+
+**Core Idea**: Learn the Q-function $Q^*(s,a)$, then extract policy by picking best action.
+
+**Algorithm:**
+1. Learn $Q(s,a)$ that estimates expected return for each action
+2. Policy is implicit: $\pi(s) = \arg\max_a Q(s,a)$
+3. Always pick action with highest Q-value
+
+**Example - Q-Learning Update:**
+
+```math
+Q(s,a) \leftarrow Q(s,a) + \alpha \left[r + \gamma \max_{a'} Q(s',a') - Q(s,a)\right]
+```
+
+**Advantages:**
+- ✅ **Sample efficient**: Can learn from any experience (off-policy)
+- ✅ **Stable updates**: Single Q-value updated at a time
+- ✅ **Simple**: Just learn a value function
+
+**Disadvantages:**
+- ❌ **Discrete actions only**: Hard to scale to continuous action spaces (millions of actions)
+- ❌ **Deterministic policies**: Always picks same action (no stochasticity)
+- ❌ **Can overestimate**: Max operator introduces optimistic bias
+
+**Real-World Analogy:**  
+Like having a price comparison app: evaluate the value of each option (flight A costs $X, flight B costs $Y), then pick the cheapest. Works great when you have a finite list of options.
+
+#### Approach 2: Policy-Based Methods (e.g., PPO, TRPO)
+
+**Core Idea**: Directly learn policy $\pi_\theta(a|s)$ that outputs actions.
+
+**Algorithm:**
+1. Policy network directly outputs action probabilities
+2. Update policy parameters to increase expected return
+3. Use gradient ascent: $\theta \leftarrow \theta + \alpha \nabla_\theta J(\theta)$
+
+**Policy Gradient:**
+
+```math
+\nabla_\theta J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta}\left[\sum_t \nabla_\theta \log \pi_\theta(a_t|s_t) \cdot R(\tau)\right]
+```
+
+**Advantages:**
+- ✅ **Continuous actions**: Natural for robotics (joint torques, steering angles)
+- ✅ **Stochastic policies**: Can learn probabilistic behaviors
+- ✅ **Better convergence**: Directly optimize what you care about (policy)
+- ✅ **Effective in high dimensions**: No max over all actions needed
+
+**Disadvantages:**
+- ❌ **High variance**: Gradients can be noisy
+- ❌ **Sample inefficient**: Typically on-policy (use data once)
+- ❌ **Unstable**: Small parameter changes → big policy changes
+
+**Real-World Analogy:**  
+Like developing instinct: practice driving until you naturally know when to brake (70% sure) vs accelerate (30% sure). You develop intuition for the right action distribution.
+
+#### Actor-Critic: Best of Both Worlds
+
+**PPO uses Actor-Critic architecture** which combines both approaches:
+
+```mermaid
+graph TB
+    A[State s] --> B[Actor: Policy π<sub>θ</sub>]
+    A --> C[Critic: Value V<sub>θ</sub>]
+    B --> D[Action a]
+    C --> E[Value estimate]
+    E --> F[Advantage = Q - V]
+    F --> G[Update Actor]
+    
+    style A fill:#2196F3,stroke:#1565C0,color:#fff
+    style B fill:#4CAF50,stroke:#2E7D32,color:#fff
+    style C fill:#FF9800,stroke:#F57C00,color:#fff
+    style G fill:#9C27B0,stroke:#6A1B9A,color:#fff
+```
+
+- **Actor** (policy): Decides which action to take
+- **Critic** (value function): Evaluates how good the action was
+- **Advantage**: Critic helps reduce Actor's gradient variance
+
+**Benefits:**
+- ✅ Lower variance than pure policy gradients (critic provides baseline)
+- ✅ Works with continuous actions (policy-based)
+- ✅ More stable than vanilla policy gradient
+
+### When to Use What?
+
+| Scenario | Recommendation | Example |
+|----------|---------------|---------|
+| **Discrete actions** (< 100 options) | Q-Learning / DQN | Atari games, board games |
+| **Continuous actions** | PPO / SAC | Robot control, autonomous driving |
+| **Need stochastic policy** | PPO / TRPO | Games with exploration, rock-paper-scissors |
+| **Off-policy learning** (learn from old data) | DQN / SAC | Batch RL, limited data collection |
+| **On-policy learning** (fresh data each update) | PPO / TRPO | Simulated environments where data is cheap |
+| **High-dimensional actions** | Policy gradient | Humanoid robot (30+ joints) |
+| **Sample efficiency critical** | DQN / SAC | Real robot (expensive data) |
+| **Stability critical** | PPO | Production systems |
+
+### Why This Workshop Uses PPO
+
+1. **General Purpose**: Works for both discrete and continuous actions
+2. **State of the Art**: Competitive performance across many tasks
+3. **Production Ready**: Used in real systems (OpenAI Five, ChatGPT RLHF)
+4. **Relatively Simple**: Easier to understand than more complex algorithms
+5. **Stable**: Won't catastrophically fail during training
+
+---
+
+## Part 2: Why PPO Exists - The Policy Gradient Challenge
 
 ### The Challenge: Training Neural Network Policies
 
@@ -649,17 +761,23 @@ So:
 A_t \approx r_t + \gamma V(s_{t+1}) - V(s_t) = \delta_t \text{ (TD error)}
 ```
 
-**Generalized Advantage Estimation (GAE):**  
+**Generalized Advantage Estimation (GAE - Paper Appendix):**  
 Instead of just one-step TD error, blend multiple steps:
 
 ```math
-A_t^{\text{GAE}} = \delta_t + \gamma\lambda\delta_{t+1} + (\gamma\lambda)^2\delta_{t+2} + \cdots
+\hat{A}_t = \sum_{l=0}^{\infty}(\gamma\lambda)^l \delta_{t+l}^V \quad \text{where } \delta_t^V = r_t + \gamma V(s_{t+1}) - V(s_t)
 ```
 
 **Parameters:**
 - $\lambda = 0$: Only one-step TD (high bias, low variance)
 - $\lambda = 1$: Full Monte Carlo (low bias, high variance)
 - $\lambda = 0.95$: Sweet spot (GAE's default)
+
+**Recursive Form** (computationally efficient):
+
+```math
+A_t = \delta_t + \gamma\lambda A_{t+1}
+```
 
 **Implementation:**
 
@@ -674,10 +792,10 @@ def compute_advantages(rewards, values, dones, gamma=0.99, lambda_=0.95):
         next_value = values[t+1] if t+1 < len(values) else 0
         next_value = next_value * (1 - dones[t])
         
-        # TD error: δ = r + γV(s') - V(s)
+        # TD error: δ_t = r_t + γV(s') - V(s)
         delta = rewards[t] + gamma * next_value - values[t]
         
-        # GAE: A = δ + γλA_next
+        # GAE recursive: A_t = δ_t + γλA_{t+1}
         advantage = delta + gamma * lambda_ * (1 - dones[t]) * last_advantage
         
         advantages.insert(0, advantage)
@@ -704,10 +822,10 @@ L^{PG}(\theta) = \mathbb{E}[\log \pi_\theta(a|s) \cdot A(s,a)]
 
 **Problem:** Can make huge policy changes!
 
-**PPO Solution - Clipped Objective:**
+**PPO Solution - Clipped Objective ([Paper Eq. 7](https://arxiv.org/abs/1707.06347)):**
 
 ```math
-L^{\text{CLIP}}(\theta) = \mathbb{E}\left[\min(r_t(\theta) A_t, \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon) A_t)\right]
+L^{\text{CLIP}}(\theta) = \hat{\mathbb{E}}_t\left[\min(r_t(\theta)\hat{A}_t, \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon)\hat{A}_t)\right]
 ```
 
 Where the **probability ratio** is:
@@ -726,21 +844,28 @@ r_t(\theta) = \frac{\pi_\theta(a_t|s_t)}{\pi_{\theta_{\text{old}}}(a_t|s_t)}
 
 ```python
 def compute_actor_loss(new_log_probs, old_log_probs, advantages, clip_eps=0.2):
-    # Probability ratio
+    # Probability ratio: r_t(θ) = π_θ(a|s) / π_θ_old(a|s)
     ratio = torch.exp(new_log_probs - old_log_probs)
     
-    # Unclipped objective
+    # Unclipped objective: r_t * A_t
     surr1 = ratio * advantages
     
-    # Clipped objective
+    # Clipped objective: clip(r_t, 1-ε, 1+ε) * A_t
     ratio_clipped = torch.clamp(ratio, 1-clip_eps, 1+clip_eps)
     surr2 = ratio_clipped * advantages
     
-    # Take minimum (pessimistic bound)
+    # Take minimum (pessimistic bound): -E[min(...)]
     loss = -torch.min(surr1, surr2).mean()
     
     return loss
 ```
+
+**Paper → Code Mapping:**
+- $r_t(\theta)$ → `ratio` 
+- $\hat{A}_t$ → `advantages`
+- $\text{clip}$ → `torch.clamp`
+- $\hat{\mathbb{E}}_t[\cdot]$ → `.mean()`
+- Negative: maximize objective = minimize negative
 
 **Why Minimum?**  
 Be conservative: only improve when we're sure the policy change is safe.
@@ -806,12 +931,25 @@ def compute_entropy_bonus(action_probs):
 
 ### Building Block 10: Putting It All Together
 
+**Complete Loss Function ([Paper Eq. 9](https://arxiv.org/abs/1707.06347)):**
+
+```math
+L_t^{\text{CLIP+VF+S}}(\theta) = \hat{\mathbb{E}}_t\left[L_t^{\text{CLIP}}(\theta) - c_1 L_t^{VF}(\theta) + c_2 S[\pi_\theta](s_t)\right]
+```
+
+Where:
+- $L_t^{\text{CLIP}}$: PPO clipped objective (actor)
+- $L_t^{VF}$: Value function loss (critic)
+- $S[\pi_\theta]$: Entropy bonus (exploration)
+- $c_1 = 0.5$: Value loss coefficient
+- $c_2 = 0.01$: Entropy coefficient
+
 **Complete PPO Update Function:**
 
 ```python
 def ppo_update(policy, optimizer, states, actions, advantages, returns, 
                old_log_probs, clip_eps=0.2, vf_coef=0.5, ent_coef=0.01):
-    """One PPO update step"""
+    """One PPO update step - implements complete loss from paper"""
     
     # Forward pass with current policy
     action_logits, values = policy(states)
@@ -821,25 +959,25 @@ def ppo_update(policy, optimizer, states, actions, advantages, returns,
     dist = torch.distributions.Categorical(action_probs)
     new_log_probs = dist.log_prob(actions)
     
-    # Actor loss (PPO clipped objective)
-    ratio = torch.exp(new_log_probs - old_log_probs)
+    # Actor loss: L^CLIP (Paper Eq. 7)
+    ratio = torch.exp(new_log_probs - old_log_probs)  # r_t(θ)
     surr1 = ratio * advantages
     surr2 = torch.clamp(ratio, 1-clip_eps, 1+clip_eps) * advantages
     actor_loss = -torch.min(surr1, surr2).mean()
     
-    # Critic loss (value function error)
+    # Critic loss: L^VF (Paper Eq. 9)
     critic_loss = F.mse_loss(values.squeeze(), returns)
     
-    # Entropy bonus (exploration)
+    # Entropy bonus: S[π_θ] (Paper Eq. 9)
     entropy = dist.entropy().mean()
     
-    # Combined loss
+    # Combined loss (Paper Eq. 9)
     loss = actor_loss + vf_coef * critic_loss - ent_coef * entropy
     
     # Gradient update
     optimizer.zero_grad()
     loss.backward()
-    torch.nn.utils.clip_grad_norm_(policy.parameters(), 0.5)  # Prevent exploding gradients
+    torch.nn.utils.clip_grad_norm_(policy.parameters(), 0.5)
     optimizer.step()
     
     return {
@@ -850,14 +988,21 @@ def ppo_update(policy, optimizer, states, actions, advantages, returns,
     }
 ```
 
+**Paper → Code Mapping:**
+- $L_t^{\text{CLIP}}$ → `actor_loss`
+- $L_t^{VF}$ → `critic_loss`
+- $S[\pi_\theta]$ → `entropy`
+- $c_1$ → `vf_coef` (0.5)
+- $c_2$ → `ent_coef` (0.01)
+
 **What Each Line Does:**
 
 1. **Forward pass**: Get current policy's predictions
 2. **Compute ratio**: How much has policy changed?
-3. **Actor loss**: Clipped PPO objective
-4. **Critic loss**: MSE between predicted and actual values
+3. **Actor loss**: Clipped PPO objective (Eq. 7)
+4. **Critic loss**: MSE between predicted and actual values (Eq. 9)
 5. **Entropy**: Measure of exploration
-6. **Combine**: Weighted sum of all objectives
+6. **Combine**: Weighted sum per paper Eq. 9
 7. **Backprop**: Update network parameters
 
 ---
@@ -918,96 +1063,7 @@ def train_ppo(env_name='LunarLander-v2', total_steps=1_000_000):
 **Why 10 epochs?**  
 Balance between sample efficiency (reuse data) and stability (don't overfit to old data).
 
----
-
-## Part 4: Connecting Math to Code
-
-Let's map the [PPO paper](https://arxiv.org/abs/1707.06347) directly to our implementation.
-
-### 📐 The Clipped Objective (Paper Eq. 7)
-
-**Paper Notation:**
-
-```math
-L^{\text{CLIP}}(\theta) = \hat{\mathbb{E}}_t\left[\min(r_t(\theta)\hat{A}_t, \text{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon)\hat{A}_t)\right]
-```
-
-**Our Code:**
-
-```python
-ratio = torch.exp(new_log_probs - old_log_probs)  # r_t(θ)
-surr1 = ratio * advantages                          # r_t * A_t
-surr2 = torch.clamp(ratio, 1-ε, 1+ε) * advantages # clip(r_t, ...) * A_t
-actor_loss = -torch.min(surr1, surr2).mean()      # -E[min(...)]
-```
-
-**Symbol Translation:**
-- $r_t(\theta)$ → `ratio`
-- $\hat{A}_t$ → `advantages`
-- $\text{clip}$ → `torch.clamp`
-- $\hat{\mathbb{E}}_t[\cdot]$ → `.mean()`
-- Negative sign: maximize objective = minimize negative
-
-### 📐 Value Function Loss (Paper Eq. 9)
-
-**Paper:**
-
-```math
-L_t^{VF}(\theta) = (V_\theta(s_t) - V_t^{\text{targ}})^2
-```
-
-**Our Code:**
-
-```python
-critic_loss = F.mse_loss(values, returns)
-```
-
-- $V_\theta(s_t)$ → `values` (critic output)
-- $V_t^{\text{targ}}$ → `returns` (actual observed)
-
-### 📐 GAE (Paper Appendix)
-
-**Paper:**
-
-```math
-\hat{A}_t = \sum_{l=0}^{\infty}(\gamma\lambda)^l \delta_{t+l}^V
-```
-
-Where $\delta_t^V = r_t + \gamma V(s_{t+1}) - V(s_t)$
-
-**Our Code (Recursive Form):**
-
-```python
-delta = rewards[t] + gamma * next_value - values[t]  # δ_t
-advantage = delta + gamma * lambda_ * last_advantage  # A_t = δ_t + γλ*A_{t+1}
-```
-
-**Why Recursive?**  
-Mathematically equivalent but computationally efficient:
-
-```math
-A_t = \delta_t + \gamma\lambda A_{t+1}
-```
-
-### 📐 Complete Loss Function
-
-**Paper:**
-
-```math
-L_t^{\text{CLIP+VF+S}}(\theta) = \hat{\mathbb{E}}_t\left[L_t^{\text{CLIP}}(\theta) - c_1 L_t^{VF}(\theta) + c_2 S[\pi_\theta](s_t)\right]
-```
-
-**Our Code:**
-
-```python
-loss = actor_loss + vf_coef * critic_loss - ent_coef * entropy
-```
-
-- $c_1$ → `vf_coef` (typically 0.5)
-- $c_2$ → `ent_coef` (typically 0.01)
-- $S[\pi_\theta]$ → `entropy`
-
-### Hyperparameter Defaults (from Paper)
+**Hyperparameters ([Paper](https://arxiv.org/abs/1707.06347) Defaults):**
 
 | Symbol | Paper Name | Code Name | Value | Purpose |
 |--------|-----------|-----------|-------|---------|
@@ -1024,7 +1080,7 @@ loss = actor_loss + vf_coef * critic_loss - ent_coef * entropy
 
 ---
 
-## Part 5: Understanding Through Visualization
+## Part 4: Understanding Through Visualization
 
 ### What Clipping Actually Does
 
@@ -1072,7 +1128,7 @@ Clipping only matters when the policy changes significantly AND the advantage su
 
 ---
 
-## Part 6: Practical Tips and Common Issues
+## Part 5: Practical Tips and Common Issues
 
 ### Debugging Checklist
 
