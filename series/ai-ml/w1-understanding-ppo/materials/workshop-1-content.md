@@ -76,24 +76,24 @@ Like planning your career: immediate rewards (salary) matter, but so do future r
 A **policy** is your strategy for choosing actions.
 
 **Deterministic Policy:**
-$$
+```math
 a = \pi(s)
-$$
+```
 "Always do X when you see Y" → Like always braking when you see a red light
 
 **Stochastic Policy:**
-$$
+```math
 a \sim \pi(a|s)
-$$
+```
 "Do X with 70% probability, Y with 30%" → Like a basketball player sometimes shooting, sometimes passing
 
 #### 2. Value Function ($V$)
 
 How good is it to be in a state?
 
-$$
+```math
 V^\pi(s) = \mathbb{E}_{\tau \sim \pi} \left[ \sum_{t=0}^{\infty} \gamma^t r_t \mid s_0 = s \right]
-$$
+```
 
 **Real-World Analogy:**  
 Being in a good neighborhood (state) means good things are likely to happen in the future (high value), even if nothing special is happening right now.
@@ -102,8 +102,9 @@ Being in a good neighborhood (state) means good things are likely to happen in t
 
 How good is it to take action $a$ in state $s$?
 
-$$
+```math
 Q^\pi(s, a) = \mathbb{E}_{\tau \sim \pi} \left[ \sum_{t=0}^{\infty} \gamma^t r_t \mid s_0 = s, a_0 = a \right]
+```
 $$
 
 **Real-World Analogy:**  
@@ -113,9 +114,9 @@ Checking your phone (action) during a meeting (state) has negative value, but ch
 
 How much better is action $a$ compared to average?
 
-$$
+```math
 A^\pi(s, a) = Q^\pi(s, a) - V^\pi(s)
-$$
+```
 
 **Real-World Analogy:**  
 If average students score 70% and you score 85%, your **advantage** is +15%. It measures how much better you did than expected.
@@ -159,9 +160,9 @@ graph LR
 #### Problem 1: Unstable Updates
 
 **Vanilla Policy Gradient:**
-$$
+```math
 \nabla_\theta J(\theta) = \mathbb{E} \left[ \nabla_\theta \log \pi_\theta(a|s) \cdot A(s,a) \right]
-$$
+```
 
 **The Issue:**  
 One big gradient update can destroy your policy!
@@ -180,9 +181,9 @@ Reading a textbook once and throwing it away vs. studying it multiple times. PPO
 
 **Trust Region Policy Optimization (TRPO)** said: "Don't change your policy too much at once!"
 
-$$
+```math
 \text{maximize } \mathbb{E} \left[ \frac{\pi_\theta(a|s)}{\pi_{\theta_{\text{old}}}(a|s)} A(s,a) \right] \quad \text{subject to: } \text{KL}(\pi_{\theta_{\text{old}}}, \pi_\theta) \leq \delta
-$$
+```
 
 **Translation:** Improve the policy, but keep it similar to the old one (measured by KL divergence).
 
