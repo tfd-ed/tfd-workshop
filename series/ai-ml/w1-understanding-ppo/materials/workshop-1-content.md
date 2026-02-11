@@ -1543,6 +1543,188 @@ PPO is used in production for:
 
 ---
 
+## Gallery: RL Environments You Can Explore
+
+PPO works across a wide variety of environments! Here's a visual tour of popular RL environments where you can apply what you've learned:
+
+### 🎮 Classic Control & Atari
+
+<table>
+<tr>
+<td align="center" width="33%">
+<img src="https://gymnasium.farama.org/_images/cart_pole.gif" width="200"/><br/>
+<b>CartPole</b><br/>
+<i>Balance a pole on a moving cart</i><br/>
+Discrete actions, simple physics
+</td>
+<td align="center" width="33%">
+<img src="https://gymnasium.farama.org/_images/acrobot.gif" width="200"/><br/>
+<b>Acrobot</b><br/>
+<i>Swing up and balance a double pendulum</i><br/>
+Underactuated control problem
+</td>
+<td align="center" width="33%">
+<img src="https://gymnasium.farama.org/_images/mountain_car.gif" width="200"/><br/>
+<b>MountainCar</b><br/>
+<i>Build momentum to reach the goal</i><br/>
+Sparse rewards, delayed gratification
+</td>
+</tr>
+<tr>
+<td align="center" width="33%">
+<img src="https://gymnasium.farama.org/_images/breakout_v4.gif" width="150"/><br/>
+<b>Breakout (Atari)</b><br/>
+<i>Learn from pixels</i><br/>
+Vision-based RL
+</td>
+<td align="center" width="33%">
+<img src="https://gymnasium.farama.org/_images/pong_v4.gif" width="150"/><br/>
+<b>Pong (Atari)</b><br/>
+<i>Classic game AI</i><br/>
+Two-player competitive
+</td>
+<td align="center" width="33%">
+<img src="https://gymnasium.farama.org/_images/space_invaders_v4.gif" width="150"/><br/>
+<b>Space Invaders</b><br/>
+<i>Shoot and dodge</i><br/>
+High-dimensional observation
+</td>
+</tr>
+</table>
+
+### 🤖 Continuous Control (MuJoCo)
+
+<table>
+<tr>
+<td align="center" width="33%">
+<img src="https://gymnasium.farama.org/_images/humanoid.gif" width="200"/><br/>
+<b>Humanoid</b><br/>
+<i>Bipedal locomotion</i><br/>
+21 DOF, complex physics
+</td>
+<td align="center" width="33%">
+<img src="https://gymnasium.farama.org/_images/ant.gif" width="200"/><br/>
+<b>Ant</b><br/>
+<i>Quadruped walking</i><br/>
+8 DOF, stable gaits
+</td>
+<td align="center" width="33%">
+<img src="https://gymnasium.farama.org/_images/half_cheetah.gif" width="200"/><br/>
+<b>HalfCheetah</b><br/>
+<i>Fast running</i><br/>
+6 DOF, speed optimization
+</td>
+</tr>
+<tr>
+<td align="center" width="33%">
+<img src="https://gymnasium.farama.org/_images/hopper.gif" width="200"/><br/>
+<b>Hopper</b><br/>
+<i>One-legged hopping</i><br/>
+3 DOF, balance challenge
+</td>
+<td align="center" width="33%">
+<img src="https://gymnasium.farama.org/_images/walker2d.gif" width="200"/><br/>
+<b>Walker2D</b><br/>
+<i>Bipedal walking</i><br/>
+6 DOF, efficient gait
+</td>
+<td align="center" width="33%">
+<img src="https://gymnasium.farama.org/_images/swimmer.gif" width="200"/><br/>
+<b>Swimmer</b><br/>
+<i>Aquatic locomotion</i><br/>
+2 DOF, fluid dynamics
+</td>
+</tr>
+</table>
+
+### 🚀 Robotics & Manipulation
+
+<table>
+<tr>
+<td align="center" width="33%">
+<img src="https://robotics.farama.org/_images/fetch_reach.gif" width="200"/><br/>
+<b>FetchReach</b><br/>
+<i>Reach target position</i><br/>
+Robot arm control
+</td>
+<td align="center" width="33%">
+<img src="https://robotics.farama.org/_images/fetch_push.gif" width="200"/><br/>
+<b>FetchPush</b><br/>
+<i>Push object to target</i><br/>
+Object manipulation
+</td>
+<td align="center" width="33%">
+<img src="https://robotics.farama.org/_images/hand_reach.gif" width="200"/><br/>
+<b>HandReach</b><br/>
+<i>Dexterous manipulation</i><br/>
+24 DOF shadow hand
+</td>
+</tr>
+</table>
+
+### 🏃 Bipedal & Box2D
+
+<table>
+<tr>
+<td align="center" width="50%">
+<img src="https://gymnasium.farama.org/_images/bipedal_walker.gif" width="250"/><br/>
+<b>BipedalWalker</b><br/>
+<i>Walk across rough terrain</i><br/>
+Continuous control, 4 joints
+</td>
+<td align="center" width="50%">
+<img src="https://gymnasium.farama.org/_images/bipedal_walker_hardcore_v3.gif" width="250"/><br/>
+<b>BipedalWalker Hardcore</b><br/>
+<i>Navigate obstacles</i><br/>
+Challenging terrain variations
+</td>
+</tr>
+<tr>
+<td align="center" width="50%">
+<img src="https://gymnasium.farama.org/_images/car_racing.gif" width="250"/><br/>
+<b>CarRacing</b><br/>
+<i>Drive on a track</i><br/>
+Vision-based, continuous steering
+</td>
+<td align="center" width="50%">
+<img src="https://gymnasium.farama.org/_images/lunar_lander.gif" width="250"/><br/>
+<b>LunarLander</b><br/>
+<i>Safe spacecraft landing</i><br/>
+<strong>★ Workshop Environment ★</strong>
+</td>
+</tr>
+</table>
+
+### 🌍 More Complex Environments
+
+Want to go deeper? Check out these advanced environments:
+
+- **[Meta-World](https://github.com/Farama-Foundation/Metaworld)**: 50 robot manipulation tasks
+- **[MuJoCo Menagerie](https://github.com/deepmind/mujoco_menagerie)**: Collection of robot models
+- **[IsaacGym](https://developer.nvidia.com/isaac-gym)**: Massively parallel physics simulation
+- **[Procgen](https://github.com/openai/procgen)**: Procedurally generated environments for generalization
+- **[DeepMind Control Suite](https://github.com/deepmind/dm_control)**: Continuous control benchmarks
+- **[Habitat](https://aihabitat.org/)**: 3D navigation in photorealistic scenes
+- **[CARLA](https://carla.org/)**: Autonomous driving simulator
+
+### 📚 Comprehensive Environment Collection
+
+For a complete list of categorized RL environments with descriptions:
+
+**🔗 [Awesome RL Environments](https://github.com/clvrai/awesome-rl-envs)**
+
+This curated list includes environments for:
+- 🤖 Robotics (manipulation, locomotion)
+- 🎮 Games (Atari, board games, video games)
+- 🏠 Navigation (indoor/outdoor, 3D scenes)
+- 🚗 Autonomous Driving (CARLA, Highway-Env)
+- 👥 Multi-Agent (competition, cooperation)
+- 🛡️ Safety (constrained RL)
+- 🎯 Multi-Task Learning
+- 🔄 Generalization benchmarks
+
+---
+
 ## Next Steps
 
 ### Continue Learning
