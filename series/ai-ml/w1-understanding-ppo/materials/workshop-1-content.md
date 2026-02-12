@@ -15,6 +15,8 @@ In this workshop, you'll build a solid foundation in Reinforcement Learning by u
 **Format:** Lecture + Code Walkthrough + Hands-On Labs
 
 ---
+If you need mathematics foundations, check out the [Math Foundations Workshop](../materials/math-foundations.md) first!
+---
 
 ## Part 1: Reinforcement Learning Foundations
 
@@ -1380,6 +1382,8 @@ def train_ppo(env_name='LunarLander-v2',
 ---
 
 ## Part 6: Live Demo - PPO in Action
+
+Check out demo materials [here](../scripts/demo/)
 
 ### Training Configuration
 
