@@ -23,7 +23,7 @@
 Master security in web applications and containerized environments
 
 - **Container Security** (7 workshops) - Currently running
-  - Workshop 1: Container Security Basics ✅ Completed (Feb 4, 2026) | [Materials](./series/web-security/w1-container-security-basics/materials/workshop-1-content.md) | [Recording(Coming Soon)](#)
+  - Workshop 1: Container Security Basics ✅ Completed (Feb 4, 2026) | [Materials](./series/web-security/w1-container-security-basics/materials/workshop-1-content.md) | [Recording](https://youtu.be/Refr3uDVJpc?si=q7wJFCfo7FBBCYsZ)
   - Workshops 2-7: Coming soon
 - **API Security** (5 workshops) - 🚧 Coming soon
 - **Authentication & Authorization** (4 workshops) - 🚧 Coming soon
@@ -32,7 +32,7 @@ Master security in web applications and containerized environments
 #### **[AI & ML Series](./series/ai-ml/README.md)** - *IN PROGRESS*
 Master reinforcement learning and modern AI techniques
 - **Reinforcement Learning** (5 workshops) - Currently running
-  - Workshop 1: Understanding Proximal Policy Optimization (PPO) | [Materials](./series/ai-ml/w1-understanding-ppo/materials/workshop-1-content.md) | [Recording(Coming Soon)](#)
+  - Workshop 1: Understanding Proximal Policy Optimization (PPO) | [Materials](./series/ai-ml/w1-understanding-ppo/materials/workshop-1-content.md) | [Recording](https://youtu.be/dfoaHA1_6AI?si=1YOjGN5QtmjDzv_i)
   - Workshops 2-5: Coming soon
 
 #### **DevOps Series** - 🔜 Coming Soon
