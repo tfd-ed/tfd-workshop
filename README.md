@@ -7,6 +7,7 @@
 [![Workshop Series](https://img.shields.io/badge/TFD-Workshop%20Series-blue.svg)](https://github.com/tfdevs/container-security-workshop-series)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Docker](https://img.shields.io/badge/Docker-Required-2496ED?logo=docker)](https://www.docker.com/)
+[![Git](https://img.shields.io/badge/Git-Required-F05032?logo=git)](https://git-scm.com/)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 > **Teaching for Development (TFDvs)** - Empowering developers through hands-on, practical workshops across security, DevOps, and modern development practices.
@@ -34,6 +35,15 @@ Master reinforcement learning and modern AI techniques
 - **Reinforcement Learning** (5 workshops) - Currently running
   - Workshop 1: Understanding Proximal Policy Optimization (PPO) | [Materials](./series/ai-ml/w1-understanding-ppo/materials/workshop-1-content.md) | [Recording](https://youtu.be/dfoaHA1_6AI?si=1YOjGN5QtmjDzv_i)
   - Workshops 2-5: Coming soon
+
+#### **[Collaborative Development Series](./series/collab-dev/README.md)** - *NEW!*
+Master team collaboration with Git and GitHub
+- **Git & GitHub Team Workflow** (5 workshops) - Now available!
+  - Workshop 1: Git & GitHub Team Workflow ✅ Available | [Materials](./series/collab-dev/w1-git-github-team-workflow/materials/workshop-1-content.md) | [Lab](./series/collab-dev/w1-git-github-team-workflow/exercises/hands-on-lab.md)
+  - Workshop 2: Code Review & PR Best Practices - 🚧 Coming soon
+  - Workshop 3: Git Advanced Workflows - 🚧 Coming soon
+  - Workshop 4: CI/CD for Teams - 🚧 Coming soon
+  - Workshop 5: Team Project Simulation - 🚧 Coming soon
 
 #### **DevOps Series** - 🔜 Coming Soon
 CI/CD, Infrastructure as Code, and automation
@@ -69,16 +79,41 @@ Microservices, scalability, and design patterns
 
 ### Prerequisites
 
+#### For Web Security Series:
 - Docker installed and running
 - Basic Linux command line knowledge
-- Terminal access
-- Text editor (VS Code, Vim, etc.)
-- Internet connection
 
----
+#### For AI/ML Series:
+- Python 3.8+
+- Basic understanding of machine learning concepts
 
-## 🎓 Learning Paths
+#### For Collaborative Development Series:
+- Git installed (2.x or higher)
+- GiFor University Students & Junior Developers (Start Here!)
+1. [Workshop: Git & GitHub Team Workflow](./series/collab-dev/w1-git-github-team-workflow/README.md) - Learn essential collaboration skills
+2. [Workshop 1: Container Security Basics](./series/web-security/w1-container-security-basics/README.md) - Understand containerization security
+3. [Workshop 1: Understanding PPO](./series/ai-ml/w1-understanding-ppo/README.md) - Dive into reinforcement learning
 
+### Security Track
+**Beginner:**
+1. [Workshop 1: Container Security Basics](./series/web-security/w1-container-security-basics/README.md)
+2. Workshop 2: Image Security (Coming Soon)
+3. Workshop 4: Secrets Management (Coming Soon)
+
+**Intermediate:**
+1. Workshop 3: Runtime Security (Coming Soon)
+2. Workshop 5: Network Security (Coming Soon)
+
+**Advanced:**
+1. Workshop 6: Supply Chain Security (Coming Soon)
+2. Workshop 7: Final Project (Coming Soon)
+
+### Team Collaboration Track
+1. [Workshop 1: Git & GitHub Team Workflow](./series/collab-dev/w1-git-github-team-workflow/README.md)
+2. Workshop 2: Code Review & PR Best Practices (Coming Soon)
+3. Workshop 3: Git Advanced Workflows (Coming Soon)
+4. Workshop 4: CI/CD for Teams (Coming Soon)
+5. Workshop 5: Team Project Simulation
 ### Beginner Track (Start Here)
 1. [Workshop 1: Container Security Basics](./series/web-security/w1-container-security-basics/README.md)
 2. Workshop 2: Image Security (Coming Soon)

@@ -54,3 +54,23 @@ credentials.json
 # System files
 *.bak
 *.backup
+
+series/collab-dev/w1-git-github-team-workflow/YOUTUBE_KEYWORDS.md
+
+series/collab-dev/w1-git-github-team-workflow/REGISTRATION_FORM_GUIDE.md
+
+series/collab-dev/w1-git-github-team-workflow/POST_WORKSHOP_SUMMARY.md
+
+series/collab-dev/w1-git-github-team-workflow/INSTRUCTOR_NOTES.md
+
+series/collab-dev/w1-git-github-team-workflow/FACEBOOK_POST.md
+
+series/ai-ml/w1-understanding-ppo/YOUTUBE_KEYWORDS.md
+
+series/ai-ml/w1-understanding-ppo/scripts/download-gifs.py
+
+series/ai-ml/w1-understanding-ppo/POST_WORKSHOP_SUMMARY.md
+
+series/ai-ml/w1-understanding-ppo/FACEBOOK_POST.md
+
+.github/copilot-instructions.md
