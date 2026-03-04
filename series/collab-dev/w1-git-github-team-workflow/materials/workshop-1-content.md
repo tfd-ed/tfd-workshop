@@ -1184,7 +1184,7 @@ Now let's see how university students can apply these professional workflows to 
 
 **Project:** Building a Task Management Web App
 
-**Team:** 4 students (Sarah, Mike, Chen, Anna)
+**Team:** 4 students (Sokha, Piseth, Dara, Kimang)
 
 **Timeline:** 8 weeks
 
@@ -1193,13 +1193,13 @@ Now let's see how university students can apply these professional workflows to 
 **Step 1: Create Repository and Add Team**
 
 ```bash
-# Sarah (project lead) creates repo
+# Sokha (project lead) creates repo
 gh repo create uni-task-manager --private --clone
 
 # Add team members
-gh repo invite mike --repo uni-task-manager --permission push
-gh repo invite chen --repo uni-task-manager --permission push
-gh repo invite anna --repo uni-task-manager --permission push
+gh repo invite piseth --repo uni-task-manager --permission push
+gh repo invite dara --repo uni-task-manager --permission push
+gh repo invite kimang --repo uni-task-manager --permission push
 ```
 
 **Step 2: Create Project Board**
@@ -1218,7 +1218,7 @@ On GitHub:
 - Due date reminders
 - Progress tracking
 
-**Sarah creates issues:**
+**Sokha creates issues:**
 
 ```markdown
 Issue #1: Set up project structure
@@ -1228,7 +1228,7 @@ Issue #1: Set up project structure
 - [ ] Set up development environment
 - [ ] Create README with setup instructions
 
-Assigned to: Sarah
+Assigned to: Sokha
 Labels: setup, documentation
 Estimated: 4 hours
 
@@ -1242,7 +1242,7 @@ Issue #2: Implement user authentication
 - [ ] Create login/register UI components
 - [ ] Add form validation
 
-Assigned to: Mike
+Assigned to: Piseth
 Labels: feature, backend, frontend
 Estimated: 10 hours
 Depends on: #1
@@ -1256,7 +1256,7 @@ Issue #3: Build task management backend
 - [ ] Implement task filtering and sorting
 - [ ] Write API tests
 
-Assigned to: Chen
+Assigned to: Dara
 Labels: feature, backend
 Estimated: 8 hours
 Depends on: #1, #2
@@ -1271,7 +1271,7 @@ Issue #4: Create task management UI
 - [ ] Implement filters and sorting
 - [ ] Make responsive for mobile
 
-Assigned to: Anna
+Assigned to: Kimang
 Labels: feature, frontend
 Estimated: 12 hours
 Depends on: #3
@@ -1284,7 +1284,7 @@ Issue #5: Add due date and reminders
 - [ ] Send email notifications
 - [ ] Add reminder UI controls
 
-Assigned to: Mike
+Assigned to: Piseth
 Labels: feature, backend, frontend
 Estimated: 6 hours
 Depends on: #3, #4
@@ -1292,7 +1292,7 @@ Depends on: #3, #4
 
 #### Week 2-3: Parallel Development
 
-**Mike's Workflow (Authentication):**
+**Piseth's Workflow (Authentication):**
 
 ```bash
 # Day 1: Start work
@@ -1334,15 +1334,15 @@ gh pr create --title "Add user authentication system" \
   --body "Implements complete auth system. Closes #2"
 ```
 
-**Chen's Workflow (Working in Parallel):**
+**Dara's Workflow (Working in Parallel):**
 
 ```bash
-# Chen starts his feature while Mike works on auth
+# Dara starts his feature while Piseth works on auth
 git checkout main
 git pull origin main
 git checkout -b feature/task-management-backend
 
-# Chen's issue comment
+# Dara's issue comment
 ```
 
 **On Issue #3:**
@@ -1353,12 +1353,12 @@ Starting task management backend.
 logic and will integrate auth later.
 
 **Approach:**
-Using mock auth for now, will connect to Mike's auth once #2 merges.
+Using mock auth for now, will connect to Piseth's auth once #2 merges.
 ```
 
 #### Week 3: Integration and Code Review
 
-**Chen's PR Depends on Mike's Auth:**
+**Dara's PR Depends on Piseth's Auth:**
 
 ```markdown
 **PR #7: Task Management Backend**
@@ -1389,12 +1389,12 @@ curl -X POST http://localhost:3000/api/tasks \
 Labels: feature, backend, depends-on-other-pr
 ```
 
-**Sarah (Project Lead) Review:**
+**Sokha (Project Lead) Review:**
 
 ```markdown
 **On PR #7:**
 
-@chen Great work on the task logic! A few suggestions:
+@dara Great work on the task logic! A few suggestions:
 
 **Code Review:**
 1. ✅ Task schema looks good
@@ -1405,7 +1405,7 @@ Labels: feature, backend, depends-on-other-pr
 4. ✅ Tests are comprehensive
 
 **Integration:**
-Once @mike's PR #6 merges, you'll need to:
+Once @piseth's PR #6 merges, you'll need to:
 - Replace mock user_id with `req.user.id` from auth middleware
 - Add auth middleware to task routes
 - Update tests to use real JWT tokens
@@ -1413,9 +1413,9 @@ Once @mike's PR #6 merges, you'll need to:
 **Approval:** Requesting changes (input validation needed)
 ```
 
-**Chen's Response:**
+**Dara's Response:**
 ```markdown
-@sarah Thanks for the review!
+@sokha Thanks for the review!
 
 Fixed:
 1. Added priority field (P0-P3) → commit xyz789
@@ -1433,30 +1433,30 @@ I'll handle auth integration once #6 merges.
 
 #### Week 4: Dealing with Conflicts
 
-**Anna's Feature Requires Changes to Shared Files:**
+**Kimang's Feature Requires Changes to Shared Files:**
 
 ```bash
-# Anna starts her feature
+# Kimang starts her feature
 git checkout main
 git pull origin main
 git checkout -b feature/task-ui-components
 
 # Works for several days
-# Meanwhile, Mike and Chen merge their PRs
+# Meanwhile, Piseth and Dara merge their PRs
 
-# Anna tries to push
+# Kimang tries to push
 git push -u origin feature/task-ui-components
 # Creates PR
 ```
 
-**Anna's PR has conflicts:**
+**Kimang's PR has conflicts:**
 ```markdown
 PR #8: Task Management UI Components
 
 ⚠️ This branch has conflicts that must be resolved
 ```
 
-**Anna resolves conflicts:**
+**Kimang resolves conflicts:**
 ```bash
 # Pull latest main
 git checkout main
@@ -1475,11 +1475,11 @@ git merge main
 ```javascript
 import React from 'react';
 <<<<<<< HEAD
-// Anna's changes
+// Kimang's changes
 import TaskList from './components/TaskList';
 import TaskForm from './components/TaskForm';
 =======
-// Changes from main (Mike's auth)
+// Changes from main (Piseth's auth)
 import Login from './components/Login';
 import Register from './components/Register';
 import { AuthProvider } from './context/AuthContext';
@@ -1504,14 +1504,14 @@ function App() {
 }
 ```
 
-**Anna resolves by combining both:**
+**Kimang resolves by combining both:**
 ```javascript
 import React from 'react';
-// Auth components (from Mike)
+// Auth components (from Piseth)
 import Login from './components/Login';
 import Register from './components/Register';
 import { AuthProvider } from './context/AuthContext';
-// Task components (Anna's work)
+// Task components (Kimang's work)
 import TaskList from './components/TaskList';
 import TaskForm from './components/TaskForm';
 
@@ -1552,7 +1552,7 @@ Tested locally - everything works together now! ✅
 
 #### Week 6: Preparing for Demo
 
-**Sarah creates milestone tracking issue:**
+**Sokha creates milestone tracking issue:**
 
 ```markdown
 Issue #15: Demo Preparation Checklist
@@ -1578,10 +1578,10 @@ Issue #15: Demo Preparation Checklist
 - [ ] Add demo data seeder (#19)
 
 **Assignments:**
-- @mike: Finish #5, help with #17
-- @chen: Finish #9, do #19
-- @anna: Finish #10, do #12, #13
-- @sarah: #14, #16, #18
+- @piseth: Finish #5, help with #17
+- @dara: Finish #9, do #19
+- @kimang: Finish #10, do #12, #13
+- @sokha: #14, #16, #18
 
 **Team Meeting:** Wednesday 3 PM to integrate everything
 ```
@@ -1607,12 +1607,12 @@ disappear until I log out and log back in.
 
 **Priority:** Critical (for demo!)
 
-**Discovered by:** Anna during testing
-**Assigned to:** Chen
+**Discovered by:** Kimang during testing
+**Assigned to:** Dara
 **Labels:** bug, critical, demo-blocker
 ```
 
-**Chen's Investigation:**
+**Dara's Investigation:**
 ```markdown
 **Root Cause Found:**
 
@@ -1669,7 +1669,7 @@ silently.
 
 **Project:** Implementing and comparing sorting algorithms
 
-**Team:** 3 students (Alice, Bob, Carol)
+**Team:** 3 students (Sophea, Rith, Channary)
 
 **Timeline:** 4 weeks
 
@@ -1702,14 +1702,14 @@ research-sorting-algorithms/
 
 ```markdown
 Issue #1: Implement core sorting algorithms
-**Assigned to:** Alice, Bob, Carol (split up)
+**Assigned to:** Sophea, Rith, Channary (split up)
 
 Sub-tasks:
-- [ ] Bubble sort (@alice)
-- [ ] Quick sort (@bob)
-- [ ] Merge sort (@carol)
-- [ ] Heap sort (@alice)
-- [ ] Radix sort (@bob)
+- [ ] Bubble sort (@sophea)
+- [ ] Quick sort (@rith)
+- [ ] Merge sort (@channary)
+- [ ] Heap sort (@sophea)
+- [ ] Radix sort (@rith)
 
 Each implementation should include:
 - Function docstring with time/space complexity
@@ -1719,7 +1719,7 @@ Each implementation should include:
 ---
 
 Issue #2: Create benchmarking framework
-**Assigned to:** Carol
+**Assigned to:** Channary
 
 - [ ] Generate test datasets (random, sorted, reverse, nearly sorted)
 - [ ] Implement timing infrastructure
@@ -1729,7 +1729,7 @@ Issue #2: Create benchmarking framework
 ---
 
 Issue #3: Perform comparative analysis
-**Assigned to:** Bob
+**Assigned to:** Rith
 
 - [ ] Run benchmarks on all algorithms
 - [ ] Calculate averages and standard deviations
@@ -1739,7 +1739,7 @@ Issue #3: Perform comparative analysis
 ---
 
 Issue #4: Create visualizations
-**Assigned to:** Alice
+**Assigned to:** Sophea
 
 - [ ] Plot runtime vs input size
 - [ ] Create comparison charts
@@ -1751,16 +1751,16 @@ Issue #4: Create visualizations
 Issue #5: Write research paper
 **Assigned to:** All (sections divided)
 
-- [ ] Introduction (@carol)
-- [ ] Methodology (@bob)
-- [ ] Results (@alice)
+- [ ] Introduction (@channary)
+- [ ] Methodology (@rith)
+- [ ] Results (@sophea)
 - [ ] Discussion (@all)
-- [ ] Conclusion (@carol)
+- [ ] Conclusion (@channary)
 ```
 
 #### Collaboration Pattern
 
-**Alice's PR for Bubble Sort:**
+**Sophea's PR for Bubble Sort:**
 
 ```markdown
 PR #6: Implement bubble sort with optimizations
@@ -1807,10 +1807,10 @@ def test_bubble_sort_empty():
 - Time complexity matches theory (tested with small inputs)
 - Works with edge cases
 
-Ready for review! @bob @carol
+Ready for review! @rith @channary
 ```
 
-**Bob's Review:**
+**Rith's Review:**
 ```markdown
 LGTM! Great documentation on complexity.
 
@@ -1821,7 +1821,7 @@ Can you add a test with duplicate elements? Want to make sure
 stable sort property is maintained.
 ```
 
-**Alice Updates:**
+**Sophea Updates:**
 ```markdown
 Good call! Added:
 python
@@ -1839,7 +1839,7 @@ Also verified bubble sort is stable (equal elements maintain order).
 ```markdown
 Issue #10: Research paper - Results section
 
-**Assigned to:** Alice
+**Assigned to:** Sophea
 
 **Content needed:**
 1. Performance comparison table
@@ -1857,7 +1857,7 @@ Use markdown, we'll convert to PDF later
 **Due:** Next Wednesday
 ```
 
-**Alice's PR for Results Section:**
+**Sophea's PR for Results Section:**
 
 ```markdown
 PR #11: Add Results section to research paper
@@ -1886,14 +1886,14 @@ As shown in Figure 1, bubble sort exhibits clear O(n²) growth...
 
 
 **Please Review:**
-- @bob: Check if numbers match your benchmark data
-- @carol: Does this flow well with the Methodology section?
+- @rith: Check if numbers match your benchmark data
+- @channary: Does this flow well with the Methodology section?
 - @both: Any analysis I'm missing?
 
 Closes #10
 ```
 
-**Bob Comments:**
+**Rith Comments:**
 ```markdown
 Numbers look good! Matches my benchmarks.
 
@@ -1904,7 +1904,7 @@ Also, maybe mention hardware specs (CPU, RAM) since that affects
 absolute numbers.
 ```
 
-**Carol Comments:**
+**Channary Comments:**
 ```markdown
 Flows well with Methodology! One thought:
 
@@ -1919,24 +1919,24 @@ Otherwise looks great! 👍
 
 **Scenario:** It's week 3 and contribution graph shows imbalance
 
-**Sarah notices:**
+**Sophea notices:**
 ```markdown
 **Team Check-In Issue #12**
 
 Hey team, looking at our contributions:
-- Alice: 45 commits, 2,500 lines
-- Bob: 28 commits, 1,800 lines
-- Carol: 12 commits, 400 lines
+- Sophea: 45 commits, 2,500 lines
+- Rith: 28 commits, 1,800 lines
+- Channary: 12 commits, 400 lines
 
-@carol Everything okay? Need any help?
+@channary Everything okay? Need any help?
 
 No judgment - just want to make sure workload is fair and
 everyone gets credit they deserve!
 ```
 
-**Carol responds:**
+**Channary responds:**
 ```markdown
-@alice @bob Sorry, had midterms last week.
+@sophea @rith Sorry, had midterms last week.
 
 I'm caught up now and ready to contribute. Can someone help me
 figure out where I can add the most value?
@@ -1951,7 +1951,7 @@ What do you think?
 
 **Team Discussion:**
 ```markdown
-@carol No worries! Glad you're back.
+@channary No worries! Glad you're back.
 
 How about:
 - Take over #13 (presentation slides) - Assigned to you
@@ -1967,7 +1967,7 @@ Sound good?
 
 **Project:** Analyzing campus survey data
 
-**Team:** 4 students (David, Emma, Frank, Grace)
+**Team:** 4 students (Vannak, Sreymom, Kosal, Pisey)
 
 **Timeline:** 3 weeks
 
@@ -1975,7 +1975,7 @@ Sound good?
 
 ```markdown
 Issue #1: Data cleaning and preprocessing
-**Assigned to:** Emma
+**Assigned to:** Sreymom
 
 Tasks:
 - [ ] Load raw survey data
@@ -1987,7 +1987,7 @@ Tasks:
 ---
 
 Issue #2: Exploratory Data Analysis
-**Assigned to:** David
+**Assigned to:** Vannak
 
 Research Questions:
 - What's the demographic breakdown?
@@ -2002,7 +2002,7 @@ Deliverables:
 ---
 
 Issue #3: Statistical analysis
-**Assigned to:** Frank
+**Assigned to:** Kosal
 
 Analyses:
 - Chi-square tests for categorical variables
@@ -2013,7 +2013,7 @@ Analyses:
 ---
 
 Issue #4: Create final report and visualizations
-**Assigned to:** Grace
+**Assigned to:** Pisey
 
 - [ ] Write executive summary
 - [ ] Create professional visualizations
@@ -2023,7 +2023,7 @@ Issue #4: Create final report and visualizations
 
 #### Notebook Collaboration via GitHub
 
-**Emma's Data Cleaning PR:**
+**Sreymom's Data Cleaning PR:**
 
 ```markdown
 PR #5: Clean and preprocess survey data
@@ -2046,7 +2046,7 @@ PR #5: Clean and preprocess survey data
 - No missing values in critical fields
 
 **Next Steps:**
-Ready for @david's EDA!
+Ready for @vannak's EDA!
 
 Files changed:
 - notebooks/01_data_cleaning.ipynb
@@ -2054,7 +2054,7 @@ Files changed:
 - data/cleaning_report.txt
 ```
 
-**David Reviews:**
+**Vannak Reviews:**
 ```markdown
 Great work! Dataset looks clean.
 
@@ -2074,7 +2074,7 @@ Otherwise ready to proceed with EDA!
 
 **Day 1:**
 ```
-@emma Thanks for clean data! Starting EDA.
+@sreymom Thanks for clean data! Starting EDA.
 
 Completed:
 - Demographic breakdown charts
@@ -2097,7 +2097,7 @@ worth highlighting in report.
 
 See notebook cell [15] for visualization.
 
-@frank This might be good for your regression analysis!
+@kosal This might be good for your regression analysis!
 ```
 
 **Day 3:**
@@ -2118,8 +2118,8 @@ EDA complete! Key findings:
 
 PR coming with finalized notebook.
 
-@frank Ready for your statistical tests!
-@grace These findings can lead your narrative
+@kosal Ready for your statistical tests!
+@pisey These findings can lead your narrative
 ```
 
 ### Communication Best Practices for Student Teams
@@ -2183,14 +2183,14 @@ Issue #20: Week 2 Team Sync Meeting
 - What you'll work on next
 
 **Action Items from Last Week:**
-- [x] @alice - Fixed merge conflict  in App.js
-- [ ] @bob - Review PR #15 (OVERDUE - please prioritize)
-- [x] @ @carol - Deploy to staging
+- [x] @sophea - Fixed merge conflict  in App.js
+- [ ] @rith - Review PR #15 (OVERDUE - please prioritize)
+- [x] @channary - Deploy to staging
 
 **This Week's Priorities:**
-1. Finish authentication testing (@alice)
-2. Complete UI polish (@carol)
-3. Write user documentation (@bob)
+1. Finish authentication testing (@sophea)
+2. Complete UI polish (@channary)
+3. Write user documentation (@rith)
 4. Prepare demo (@all)
 ```
 
@@ -2224,7 +2224,7 @@ Issue #20: Week 2 Team Sync Meeting
 ### Conflict Resolution
 - Discuss technical disagreements on GitHub (documented)
 - If stuck, schedule video call
-- Project lead (@sarah) has final say if needed
+- Project lead (@sokha) has final say if needed
 
 ### Contribution Balance
 - Check contribution graph weekly
@@ -2388,7 +2388,115 @@ git checkout feature/dark-mode
 
 ### Keeping Your Branch Updated
 
-When working on a long-lived feature branch, the main branch may advance:
+#### The Problem: Diverging Branches
+
+When working on a **long-lived feature branch** (one that takes several days or weeks), the `main` branch doesn't stop moving forward. While you're developing your feature, your teammates are:
+- Merging their own pull requests
+- Fixing bugs
+- Adding new features
+- Updating dependencies
+
+This creates **branch divergence** - your branch and main branch grow apart.
+
+#### Visualizing Branch Divergence
+
+```mermaid
+gitGraph
+    commit id: "A - Initial state"
+    commit id: "B - Add homepage"
+    branch feature/user-dashboard
+    checkout feature/user-dashboard
+    commit id: "C - Start dashboard"
+    checkout main
+    commit id: "D - Fix security bug" tag: "teammate PR"
+    checkout feature/user-dashboard
+    commit id: "E - Add widgets"
+    checkout main
+    commit id: "F - Update API" tag: "teammate PR"
+    checkout feature/user-dashboard
+    commit id: "G - Add charts"
+    checkout main
+    commit id: "H - Fix database" tag: "teammate PR"
+```
+
+**What happened here:**
+
+**Day 1:**
+- You branch off from commit `B`
+- You make commit `C` on your feature branch
+
+**Day 2:**
+- Your teammate merges a security fix → commit `D` added to main
+- You continue working → commit `E` on your branch
+
+**Day 3:**
+- Another teammate updates the API → commit `F` on main
+- You add more features → commit `G` on your branch
+
+**Day 4:**
+- Someone fixes the database → commit `H` on main
+- Your branch is now **4 commits behind main**!
+
+#### Why This Is a Problem
+
+**Problem 1: Your Code Is Outdated**
+
+Your feature branch is based on old code that doesn't include:
+- Security fixes from commit `D`
+- API changes from commit `F`
+- Database fixes from commit `H`
+
+**Real Example:**
+```javascript
+// Your feature branch (based on old code)
+function fetchUserData() {
+    return fetch('/api/users');  // Uses old API endpoint
+}
+
+// But main branch was updated (commit F)
+function fetchUserData() {
+    return fetch('/api/v2/users');  // New API endpoint!
+}
+```
+
+When you try to merge, your code might break because it's calling an old API!
+
+**Problem 2: Merge Conflicts Pile Up**
+
+The longer you wait, the more conflicts accumulate:
+
+```javascript
+// Main branch (commit H)
+const dbConfig = {
+    host: 'new-database.com',
+    port: 5432,
+    ssl: true  // New requirement!
+};
+
+// Your feature branch (still using old code)
+const dbConfig = {
+    host: 'old-database.com',
+    port: 3306
+};
+```
+
+If you had updated your branch earlier, you would have caught this conflict in small, manageable pieces. Now you have to resolve everything at once!
+
+**Problem 3: Integration Surprises**
+
+You think your feature works perfectly (it does on your branch!), but when you finally merge:
+```
+❌ Tests fail
+❌ Build breaks
+❌ Conflicts everywhere
+❌ Security vulnerabilities
+```
+
+All because your code hasn't been tested against the latest changes.
+
+#### The Solution: Regular Updates
+
+**Keep your branch fresh by regularly merging main:**
 
 ```bash
 # On your feature branch
@@ -2405,7 +2513,106 @@ git rebase main
 git push --force-with-lease
 ```
 
-⚠️ **Warning:** Use rebase carefully! Only rebase branches that only you are working on.
+#### After Merging Main Into Your Branch
+
+```mermaid
+gitGraph
+    commit id: "A"
+    commit id: "B - Add homepage"
+    branch feature/user-dashboard
+    checkout feature/user-dashboard
+    commit id: "C - Start dashboard"
+    checkout main
+    commit id: "D - Fix security bug"
+    checkout feature/user-dashboard
+    commit id: "E - Add widgets"
+    checkout main
+    commit id: "F - Update API"
+    checkout feature/user-dashboard
+    merge main tag: "Merge main"
+    commit id: "G - Add charts (now on latest code!)"
+    checkout main
+    commit id: "H - Fix database"
+    checkout feature/user-dashboard
+    merge main tag: "Merge main again"
+    commit id: "I - Final touches"
+    checkout main
+    merge feature/user-dashboard tag: "Clean merge!"
+```
+
+**Benefits:**
+
+✅ **Your code stays compatible** - You catch integration issues early
+✅ **Smaller conflicts** - Resolve conflicts incrementally, not all at once
+✅ **Safer merging** - Final merge to main is smooth and predictable
+✅ **Better testing** - Your feature works with the latest code
+✅ **Security updates** - You get bug fixes and security patches immediately
+
+#### Merge vs Rebase: Which To Use?
+
+**Option 1: Merge (Recommended for Beginners)**
+
+```bash
+git checkout feature/user-profile
+git merge main
+```
+
+**Pros:**
+- ✅ Preserves complete history
+- ✅ Safer - no force push needed
+- ✅ Shows when you integrated main changes
+- ✅ Works well for branches shared with others
+
+**Cons:**
+- ❌ Creates merge commits (history can look messy)
+- ❌ Less linear git history
+
+**When to use:** Most of the time, especially on shared branches!
+
+**Option 2: Rebase (Advanced)**
+
+```bash
+git checkout feature/user-profile
+git rebase main
+git push --force-with-lease
+```
+
+**Pros:**
+- ✅ Clean, linear history
+- ✅ Makes your commits appear as if they were just made
+- ✅ Easier to understand in git log
+
+**Cons:**
+- ❌ Rewrites history (can be dangerous)
+- ❌ Requires force push
+- ❌ Can cause problems if others are working on same branch
+- ❌ More complex conflict resolution
+
+**When to use:** Only on branches where you're the sole developer!
+
+⚠️ **Warning:** Never rebase branches that other people are working on! Use merge instead.
+
+#### Best Practice: Update Regularly
+
+**Don't wait for your PR!** Update your branch regularly:
+
+```bash
+# Good Practice: Update every 2-3 days
+# Monday
+git checkout feature/user-dashboard
+git merge main
+
+# Wednesday
+git merge main
+
+# Friday (before creating PR)
+git merge main
+```
+
+This way you:
+- Catch conflicts early when they're small
+- Stay compatible with latest changes
+- Make final merge smooth and safe
 
 ### Branch Protection Rules
 
