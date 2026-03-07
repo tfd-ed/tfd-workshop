@@ -12,7 +12,7 @@ By the end of this workshop, you will:
 
 ---
 
-Video recording of the workshop: *[Link will be added after live session]*
+Video recording of the workshop: *[youtu.be/6M6yDowX6ts](youtu.be/6M6yDowX6ts)*
 
 ---
 
