@@ -33,13 +33,13 @@ Master security in web applications and containerized environments
 #### **[AI & ML Series](./series/ai-ml/README.md)** - *IN PROGRESS*
 Master reinforcement learning and modern AI techniques
 - **Reinforcement Learning** (5 workshops) - Currently running
-  - Workshop 1: Understanding Proximal Policy Optimization (PPO) | [Materials](./series/ai-ml/w1-understanding-ppo/materials/workshop-1-content.md) | [Recording](https://youtu.be/dfoaHA1_6AI?si=1YOjGN5QtmjDzv_i)
+  - Workshop 1: Understanding Proximal Policy Optimization (PPO) ✅ Completed (Feb 11, 2026) | [Materials](./series/ai-ml/w1-understanding-ppo/materials/workshop-1-content.md) | [Recording](https://youtu.be/dfoaHA1_6AI?si=1YOjGN5QtmjDzv_i)
   - Workshops 2-5: Coming soon
 
 #### **[Collaborative Development Series](./series/collab-dev/README.md)** - *NEW!*
 Master team collaboration with Git and GitHub
 - **Git & GitHub Team Workflow** (5 workshops) - Now available!
-  - Workshop 1: Git & GitHub Team Workflow ✅ Available | [Materials](./series/collab-dev/w1-git-github-team-workflow/materials/workshop-1-content.md) | [Lab](./series/collab-dev/w1-git-github-team-workflow/exercises/hands-on-lab.md)
+  - Workshop 1: Git & GitHub Team Workflow ✅ Completed (Mar 4, 2026) | [Materials](./series/collab-dev/w1-git-github-team-workflow/materials/workshop-1-content.md) | [Recording](youtu.be/6M6yDowX6ts)
   - Workshop 2: Code Review & PR Best Practices - 🚧 Coming soon
   - Workshop 3: Git Advanced Workflows - 🚧 Coming soon
   - Workshop 4: CI/CD for Teams - 🚧 Coming soon
