@@ -1,0 +1,857 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frontend Performance Metrics Demo</title>
+
+    <!-- ============================================================
+         INTENTIONAL ISSUES FOR LIGHTHOUSE TO CATCH:
+         - Large render-blocking script (TBT, TTI)
+         - Images with no dimensions (CLS)
+         - Late-loading large hero element (LCP)
+         - Long tasks on interaction (INP)
+         Run: lighthouse http://localhost:8080 --view
+    ============================================================ -->
+
+    <!-- 🔴 Render-blocking stylesheet (demonstrates FCP delay) -->
+    <style>
+      :root {
+        --good: #0cce6b;
+        --needs: #ffa400;
+        --poor: #ff4e42;
+        --bg: #f0f4f8;
+        --card: #ffffff;
+        --text: #1a202c;
+        --muted: #718096;
+        --radius: 12px;
+        --shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", system-ui, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      /* ── Header ───────────────────────────────────────────── */
+      .site-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2.5rem 1.5rem 2rem;
+        text-align: center;
+      }
+
+      .site-header h1 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .site-header p {
+        opacity: 0.85;
+        max-width: 540px;
+        margin: 0 auto 1.25rem;
+      }
+
+      .badge {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        border-radius: 999px;
+        padding: 0.25rem 0.85rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+      }
+
+      /* ── Layout ───────────────────────────────────────────── */
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 4rem;
+      }
+
+      section {
+        margin-bottom: 2.5rem;
+      }
+
+      .section-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .section-title::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: #e2e8f0;
+      }
+
+      /* ── Metric Cards ─────────────────────────────────────── */
+      .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1rem;
+      }
+
+      .card {
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.2s;
+      }
+
+      .card:hover {
+        transform: translateY(-3px);
+      }
+
+      .card-accent {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+      }
+
+      .card h3 {
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+      }
+
+      .card .abbr {
+        font-size: 1.75rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        margin-bottom: 0.5rem;
+      }
+
+      .card p {
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin-bottom: 1rem;
+      }
+
+      .thresholds {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        font-size: 0.8rem;
+      }
+
+      .threshold {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+
+      .dot.good {
+        background: var(--good);
+      }
+      .dot.needs {
+        background: var(--needs);
+      }
+      .dot.poor {
+        background: var(--poor);
+      }
+
+      .live-value {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: 999px;
+        background: #edf2ff;
+        color: #4c6ef5;
+      }
+
+      /* ── LCP target element ───────────────────────────────── */
+      .hero-section {
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      /* 🔴 No explicit width/height → CLS problem */
+      #lcp-image {
+        width: 100%;
+        display: block;
+        /* intentionally no height set → causes CLS */
+      }
+
+      .hero-body {
+        padding: 1.5rem;
+      }
+
+      .hero-body h2 {
+        font-size: 1.4rem;
+        margin-bottom: 0.5rem;
+      }
+
+      /* ── CLS Demo ─────────────────────────────────────────── */
+      .cls-wrapper {
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+        position: relative;
+        min-height: 120px;
+      }
+
+      #cls-banner {
+        display: none;
+        background: #fff3cd;
+        border: 1px solid #ffc107;
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      #cls-content p {
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-bottom: 0.5rem;
+      }
+
+      .cls-button {
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        padding: 0.6rem 1.25rem;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+      }
+
+      .cls-button:hover {
+        background: #5a67d8;
+      }
+
+      /* ── INP Demo ─────────────────────────────────────────── */
+      .inp-wrapper {
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+      }
+
+      .inp-controls {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+      }
+
+      .btn {
+        padding: 0.6rem 1.25rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .btn-bad {
+        background: var(--poor);
+        color: white;
+      }
+
+      .btn-good {
+        background: var(--good);
+        color: white;
+      }
+
+      #inp-result {
+        margin-top: 0.75rem;
+        font-size: 0.85rem;
+        color: var(--muted);
+        min-height: 1.4rem;
+      }
+
+      /* ── TBT Demo ─────────────────────────────────────────── */
+      .tbt-wrapper {
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 1.5rem;
+      }
+
+      #tbt-result {
+        margin-top: 0.75rem;
+        font-size: 0.85rem;
+        color: var(--muted);
+        min-height: 1.4rem;
+      }
+
+      /* ── Web Vitals Live Panel ────────────────────────────── */
+      .vitals-live {
+        background: #1a202c;
+        border-radius: var(--radius);
+        padding: 1.25rem 1.5rem;
+        color: #e2e8f0;
+      }
+
+      .vitals-live h3 {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #a0aec0;
+        margin-bottom: 1rem;
+      }
+
+      .vitals-row {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .vital-chip {
+        background: #2d3748;
+        border-radius: 8px;
+        padding: 0.6rem 1rem;
+        min-width: 100px;
+      }
+
+      .vital-chip .name {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #a0aec0;
+        margin-bottom: 2px;
+      }
+
+      .vital-chip .value {
+        font-size: 1.2rem;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .value.good {
+        color: var(--good);
+      }
+      .value.needs {
+        color: var(--needs);
+      }
+      .value.poor {
+        color: var(--poor);
+      }
+      .value.pending {
+        color: #a0aec0;
+      }
+
+      /* ── Instructions box ─────────────────────────────────── */
+      .instructions {
+        background: #ebf8ff;
+        border: 1px solid #bee3f8;
+        border-left: 4px solid #4299e1;
+        border-radius: 8px;
+        padding: 1rem 1.25rem;
+        font-size: 0.875rem;
+      }
+
+      .instructions strong {
+        display: block;
+        margin-bottom: 0.35rem;
+        color: #2b6cb0;
+      }
+
+      .instructions ol {
+        padding-left: 1.25rem;
+        color: #2c5282;
+      }
+
+      .instructions li {
+        margin-bottom: 0.2rem;
+      }
+
+      code {
+        background: #edf2ff;
+        color: #4c6ef5;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.9em;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ─────────────────────────────────────────────────────────
+         HEADER
+    ───────────────────────────────────────────────────────────── -->
+    <header class="site-header">
+      <h1>Performance Metrics Demo</h1>
+      <p>
+        This page is intentionally crafted with real-world issues so you can
+        observe each metric in Lighthouse and Chrome DevTools.
+      </p>
+      <span class="badge">Run Lighthouse to score this page</span>
+    </header>
+
+    <main>
+      <!-- ── How to run ──────────────────────────────────────── -->
+      <section>
+        <div class="section-title">🛠️ How to run</div>
+        <div class="instructions">
+          <strong>Option A — Browser DevTools (quickest)</strong>
+          <ol>
+            <li>
+              Open <code>demo.html</code> via a local server (see Option B)
+            </li>
+            <li>Press <code>F12</code> → Lighthouse tab</li>
+            <li>
+              Select <em>Performance</em> only → <em>Analyze page load</em>
+            </li>
+            <li>Watch each metric light up below</li>
+          </ol>
+          <strong style="margin-top: 0.75rem"
+            >Option B — CLI (recommended)</strong
+          >
+          <ol>
+            <li>
+              Start a server:
+              <code>npx serve . -p 8080</code> or
+              <code>python3 -m http.server 8080</code>
+            </li>
+            <li>
+              Run:
+              <code>lighthouse http://localhost:8080/demo.html --view</code>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ── Metric reference cards ─────────────────────────── -->
+      <section>
+        <div class="section-title">📐 Core Web Vitals &amp; Other Metrics</div>
+        <div class="metric-grid">
+          <!-- LCP -->
+          <div class="card">
+            <div class="card-accent" style="background: var(--good)"></div>
+            <span class="live-value" id="card-lcp">—</span>
+            <div class="abbr">LCP</div>
+            <h3>Largest Contentful Paint</h3>
+            <p>When the largest visible element finishes loading.</p>
+            <div class="thresholds">
+              <div class="threshold">
+                <span class="dot good"></span> Good: &lt; 2.5 s
+              </div>
+              <div class="threshold">
+                <span class="dot needs"></span> Needs improvement: 2.5 – 4 s
+              </div>
+              <div class="threshold">
+                <span class="dot poor"></span> Poor: &gt; 4 s
+              </div>
+            </div>
+          </div>
+
+          <!-- INP -->
+          <div class="card">
+            <div class="card-accent" style="background: var(--needs)"></div>
+            <span class="live-value" id="card-inp">—</span>
+            <div class="abbr">INP</div>
+            <h3>Interaction to Next Paint</h3>
+            <p>How fast the page responds to user input.</p>
+            <div class="thresholds">
+              <div class="threshold">
+                <span class="dot good"></span> Good: &lt; 200 ms
+              </div>
+              <div class="threshold">
+                <span class="dot needs"></span> Needs improvement: 200 – 500 ms
+              </div>
+              <div class="threshold">
+                <span class="dot poor"></span> Poor: &gt; 500 ms
+              </div>
+            </div>
+          </div>
+
+          <!-- CLS -->
+          <div class="card">
+            <div class="card-accent" style="background: var(--poor)"></div>
+            <span class="live-value" id="card-cls">—</span>
+            <div class="abbr">CLS</div>
+            <h3>Cumulative Layout Shift</h3>
+            <p>Unexpected visual movement during load.</p>
+            <div class="thresholds">
+              <div class="threshold">
+                <span class="dot good"></span> Good: &lt; 0.1
+              </div>
+              <div class="threshold">
+                <span class="dot needs"></span> Needs improvement: 0.1 – 0.25
+              </div>
+              <div class="threshold">
+                <span class="dot poor"></span> Poor: &gt; 0.25
+              </div>
+            </div>
+          </div>
+
+          <!-- FCP -->
+          <div class="card">
+            <div class="card-accent" style="background: var(--good)"></div>
+            <span class="live-value" id="card-fcp">—</span>
+            <div class="abbr">FCP</div>
+            <h3>First Contentful Paint</h3>
+            <p>When the first text or image paints on screen.</p>
+            <div class="thresholds">
+              <div class="threshold">
+                <span class="dot good"></span> Good: &lt; 1.8 s
+              </div>
+              <div class="threshold">
+                <span class="dot needs"></span> Needs improvement: 1.8 – 3 s
+              </div>
+              <div class="threshold">
+                <span class="dot poor"></span> Poor: &gt; 3 s
+              </div>
+            </div>
+          </div>
+
+          <!-- TTI -->
+          <div class="card">
+            <div class="card-accent" style="background: var(--needs)"></div>
+            <span class="live-value" id="card-tti">—</span>
+            <div class="abbr">TTI</div>
+            <h3>Time to Interactive</h3>
+            <p>
+              When the page is fully interactive (main thread quiet for 5 s).
+            </p>
+            <div class="thresholds">
+              <div class="threshold">
+                <span class="dot good"></span> Good: &lt; 3.8 s
+              </div>
+              <div class="threshold">
+                <span class="dot needs"></span> Needs improvement: 3.8 – 7.3 s
+              </div>
+              <div class="threshold">
+                <span class="dot poor"></span> Poor: &gt; 7.3 s
+              </div>
+            </div>
+          </div>
+
+          <!-- TBT -->
+          <div class="card">
+            <div class="card-accent" style="background: var(--poor)"></div>
+            <span class="live-value" id="card-tbt">—</span>
+            <div class="abbr">TBT</div>
+            <h3>Total Blocking Time</h3>
+            <p>Sum of time the main thread was blocked &gt; 50 ms.</p>
+            <div class="thresholds">
+              <div class="threshold">
+                <span class="dot good"></span> Good: &lt; 200 ms
+              </div>
+              <div class="threshold">
+                <span class="dot needs"></span> Needs improvement: 200 – 600 ms
+              </div>
+              <div class="threshold">
+                <span class="dot poor"></span> Poor: &gt; 600 ms
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── LCP target ──────────────────────────────────────── -->
+      <section>
+        <div class="section-title">
+          🖼️ LCP — Large Hero Image (no size attributes)
+        </div>
+        <div class="hero-section">
+          <!--
+            🔴 No width/height on the img → CLS (layout shift when loaded)
+            🔴 Large external image → slow LCP
+          -->
+          <img
+            id="lcp-image"
+            src="https://picsum.photos/960/480?grayscale"
+            alt="Hero image — no dimensions set (intentional CLS trigger)"
+          />
+          <div class="hero-body">
+            <h2>This image has no explicit dimensions</h2>
+            <p style="color: var(--muted); font-size: 0.9rem">
+              Lighthouse will flag this as a CLS issue. Notice how the text
+              below jumps when the image loads. Fix: add
+              <code>width="960" height="480"</code>.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── CLS demo ────────────────────────────────────────── -->
+      <section>
+        <div class="section-title">📐 CLS — Layout Shift Trigger</div>
+        <div class="cls-wrapper">
+          <!-- Banner injected AFTER content = layout shift -->
+          <div id="cls-banner">
+            📣 This banner was injected after the content loaded — causing a
+            layout shift!
+          </div>
+          <div id="cls-content">
+            <p>
+              Click the button below to simulate a layout shift (e.g., a cookie
+              banner or ad).
+            </p>
+            <p>
+              Watch how the content below gets pushed down — that's CLS in
+              action.
+            </p>
+            <button class="cls-button" onclick="triggerCLS()">
+              Inject late banner (trigger CLS)
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── INP demo ────────────────────────────────────────── -->
+      <section>
+        <div class="section-title">⚡ INP — Interaction Responsiveness</div>
+        <div class="inp-wrapper">
+          <p
+            style="
+              font-size: 0.9rem;
+              color: var(--muted);
+              margin-bottom: 0.5rem;
+            "
+          >
+            Compare how the page responds to a "bad" click handler (long
+            synchronous task) vs. a "good" async one. Use Chrome DevTools
+            <em>Performance</em> tab to see the difference.
+          </p>
+          <div class="inp-controls">
+            <button class="btn btn-bad" onclick="badInteraction()">
+              🔴 Bad click (blocks ~600 ms)
+            </button>
+            <button class="btn btn-good" onclick="goodInteraction()">
+              🟢 Good click (async, instant)
+            </button>
+          </div>
+          <div id="inp-result">Click a button to test responsiveness…</div>
+        </div>
+      </section>
+
+      <!-- ── TBT demo ────────────────────────────────────────── -->
+      <section>
+        <div class="section-title">🧱 TBT — Total Blocking Time</div>
+        <div class="tbt-wrapper">
+          <p
+            style="
+              font-size: 0.9rem;
+              color: var(--muted);
+              margin-bottom: 0.5rem;
+            "
+          >
+            TBT measures how long the main thread is blocked during page load.
+            Click to run a blocking task and watch the page freeze.
+          </p>
+          <div class="inp-controls">
+            <button class="btn btn-bad" onclick="runBlockingTask()">
+              🔴 Run blocking task (500 ms)
+            </button>
+          </div>
+          <div id="tbt-result">
+            Try clicking, scrolling or typing while the task runs…
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Live Web Vitals panel ───────────────────────────── -->
+      <section>
+        <div class="section-title">📡 Live Web Vitals (real-time)</div>
+        <div class="vitals-live">
+          <h3>Collected in this browser session</h3>
+          <div class="vitals-row">
+            <div class="vital-chip">
+              <div class="name">LCP</div>
+              <div class="value pending" id="live-lcp">—</div>
+            </div>
+            <div class="vital-chip">
+              <div class="name">INP</div>
+              <div class="value pending" id="live-inp">—</div>
+            </div>
+            <div class="vital-chip">
+              <div class="name">CLS</div>
+              <div class="value pending" id="live-cls">—</div>
+            </div>
+            <div class="vital-chip">
+              <div class="name">FCP</div>
+              <div class="value pending" id="live-fcp">—</div>
+            </div>
+            <div class="vital-chip">
+              <div class="name">TTFB</div>
+              <div class="value pending" id="live-ttfb">—</div>
+            </div>
+          </div>
+          <p style="font-size: 0.75rem; color: #718096; margin-top: 0.75rem">
+            Values update as you interact. INP requires at least one
+            click/tap/key press.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- ==========================================================
+         SCRIPTS
+    ============================================================ -->
+
+    <!-- 🔴 Intentional long task on load → inflates TBT/TTI -->
+    <script>
+      // Simulate heavy synchronous work during page load (contributes to TBT)
+      (function simulateLoadBlocker() {
+        const start = performance.now();
+        // Block for ~300 ms (a long task > 50 ms counts toward TBT)
+        while (performance.now() - start < 300) {
+          /* spin */
+        }
+      })();
+    </script>
+
+    <!-- Web Vitals from CDN (no build step required) -->
+    <script type="module">
+      import {
+        onLCP,
+        onINP,
+        onCLS,
+        onFCP,
+        onTTFB,
+      } from "https://unpkg.com/web-vitals@4/dist/web-vitals.attribution.js";
+
+      function classify(name, value) {
+        const thresholds = {
+          LCP: [2500, 4000],
+          INP: [200, 500],
+          CLS: [0.1, 0.25],
+          FCP: [1800, 3000],
+          TTFB: [800, 1800],
+        };
+        const [good, poor] = thresholds[name] ?? [Infinity, Infinity];
+        if (value <= good) return "good";
+        if (value <= poor) return "needs";
+        return "poor";
+      }
+
+      function setCardBadge(cardId, value, unit = "") {
+        const el = document.getElementById(cardId);
+        if (el) el.textContent = value + unit;
+      }
+
+      function updateLiveChip(liveId, value, rating) {
+        const el = document.getElementById(liveId);
+        if (!el) return;
+        el.textContent = value;
+        el.className = "value " + rating;
+      }
+
+      onLCP((metric) => {
+        const v = (metric.value / 1000).toFixed(2);
+        const r = classify("LCP", metric.value);
+        setCardBadge("card-lcp", v + "s");
+        updateLiveChip("live-lcp", v + "s", r);
+      });
+
+      onINP((metric) => {
+        const v = Math.round(metric.value);
+        const r = classify("INP", metric.value);
+        setCardBadge("card-inp", v + "ms");
+        updateLiveChip("live-inp", v + "ms", r);
+      });
+
+      onCLS((metric) => {
+        const v = metric.value.toFixed(3);
+        const r = classify("CLS", metric.value);
+        setCardBadge("card-cls", v);
+        updateLiveChip("live-cls", v, r);
+      });
+
+      onFCP((metric) => {
+        const v = (metric.value / 1000).toFixed(2);
+        const r = classify("FCP", metric.value);
+        setCardBadge("card-fcp", v + "s");
+        updateLiveChip("live-fcp", v + "s", r);
+      });
+
+      onTTFB((metric) => {
+        const v = Math.round(metric.value);
+        const r = classify("TTFB", metric.value);
+        updateLiveChip("live-ttfb", v + "ms", r);
+      });
+    </script>
+
+    <!-- Demo interaction scripts -->
+    <script>
+      /* ── CLS trigger ─────────────────────────────────────── */
+      function triggerCLS() {
+        const banner = document.getElementById("cls-banner");
+        banner.style.display = "block";
+        document.querySelector(".cls-button").disabled = true;
+        document.querySelector(".cls-button").textContent =
+          "✅ Banner injected — see the shift above";
+      }
+
+      /* ── INP: bad interaction (blocks main thread) ─────── */
+      function badInteraction() {
+        const start = performance.now();
+        // 🔴 Synchronous block — page is frozen until done
+        while (performance.now() - start < 600) {
+          /* spin */
+        }
+        document.getElementById("inp-result").textContent =
+          "🔴 Done! Main thread was blocked for ~600 ms. The button felt unresponsive.";
+      }
+
+      /* ── INP: good interaction (async) ─────────────────── */
+      async function goodInteraction() {
+        document.getElementById("inp-result").textContent =
+          "🟢 Clicked! Processing in the background… (page stays responsive)";
+        // Yield immediately so browser can paint the feedback
+        await new Promise((r) => setTimeout(r, 0));
+        // Simulate work split into micro-tasks
+        for (let i = 0; i < 50; i++) {
+          await new Promise((r) => setTimeout(r, 0));
+        }
+        document.getElementById("inp-result").textContent =
+          "🟢 Done! Work was split into micro-tasks — page stayed interactive the whole time.";
+      }
+
+      /* ── TBT: blocking task ──────────────────────────────── */
+      function runBlockingTask() {
+        const result = document.getElementById("tbt-result");
+        result.textContent =
+          "⏳ Running blocking task… try scrolling or clicking now.";
+        const start = performance.now();
+        // 🔴 Long synchronous task — contributes to TBT
+        while (performance.now() - start < 500) {
+          /* spin */
+        }
+        result.textContent =
+          "🔴 Finished! The page was completely frozen for ~500 ms — that is one long task.";
+      }
+    </script>
+  </body>
+</html>

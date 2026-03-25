@@ -45,6 +45,14 @@ Master team collaboration with Git and GitHub
   - Workshop 4: CI/CD for Teams - 🚧 Coming soon
   - Workshop 5: Team Project Simulation - 🚧 Coming soon
 
+#### **[Web Optimization Series](./series/web-optimization/README.md)** - *NEW!*
+Master frontend performance optimization and Core Web Vitals
+- **Frontend Optimization** - Now available!
+  - Workshop 1: Frontend Optimization ✅ Available Now | [Materials](./series/web-optimization/w1-frontend-optimization/materials/workshop-1-content.md)
+  - Workshop 2: Backend Performance - 🚧 Coming soon
+  - Workshop 3: Full-Stack Performance - 🚧 Coming soon
+  - Workshop 4: Production Monitoring - 🚧 Coming soon
+
 #### **DevOps Series** - 🔜 Coming Soon
 CI/CD, Infrastructure as Code, and automation
 
@@ -89,7 +97,16 @@ Microservices, scalability, and design patterns
 
 #### For Collaborative Development Series:
 - Git installed (2.x or higher)
-- GiFor University Students & Junior Developers (Start Here!)
+- GitHub account
+- Text editor or IDE
+
+#### For Web Optimization Series:
+- Modern web browser (Chrome recommended)
+- Node.js 16+ and npm
+- Basic HTML, CSS, and JavaScript knowledge
+- Text editor or IDE
+
+---
 1. [Workshop: Git & GitHub Team Workflow](./series/collab-dev/w1-git-github-team-workflow/README.md) - Learn essential collaboration skills
 2. [Workshop 1: Container Security Basics](./series/web-security/w1-container-security-basics/README.md) - Understand containerization security
 3. [Workshop 1: Understanding PPO](./series/ai-ml/w1-understanding-ppo/README.md) - Dive into reinforcement learning
