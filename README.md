@@ -48,7 +48,7 @@ Master team collaboration with Git and GitHub
 #### **[Web Optimization Series](./series/web-optimization/README.md)** - *NEW!*
 Master frontend performance optimization and Core Web Vitals
 - **Frontend Optimization** - Now available!
-  - Workshop 1: Frontend Optimization ✅ Available Now | [Materials](./series/web-optimization/w1-frontend-optimization/materials/workshop-1-content.md)
+  - Workshop 1: Frontend Optimization ✅ Completed (Mar 25, 2026) | [Materials](./series/web-optimization/w1-frontend-optimization/materials/workshop-1-content.md) | [Recording](https://youtu.be/9weMJYLVwmI?si=1YOjGN5QtmjDzv_i)
   - Workshop 2: Backend Performance - 🚧 Coming soon
   - Workshop 3: Full-Stack Performance - 🚧 Coming soon
   - Workshop 4: Production Monitoring - 🚧 Coming soon

@@ -14,6 +14,8 @@
 7. [Conclusion](#7-conclusion-5-minutes)
 
 ---
+View recorded workshop on YouTube: [https://youtu.be/9weMJYLVwmI](https://youtu.be/9weMJYLVwmI)
+---
 
 ## 🎯 Learning Objectives
 
