@@ -32,9 +32,10 @@ Master security in web applications and containerized environments
 
 #### **[AI & ML Series](./series/ai-ml/README.md)** - *IN PROGRESS*
 Master reinforcement learning and modern AI techniques
-- **Reinforcement Learning** (5 workshops) - Currently running
+- **Reinforcement Learning & AI Efficiency** - Currently running
   - Workshop 1: Understanding Proximal Policy Optimization (PPO) ✅ Completed (Feb 11, 2026) | [Materials](./series/ai-ml/w1-understanding-ppo/materials/workshop-1-content.md) | [Recording](https://youtu.be/dfoaHA1_6AI?si=1YOjGN5QtmjDzv_i)
-  - Workshops 2-5: Coming soon
+  - Workshop 2: AI Is Getting Expensive — Stop Wasting Tokens! ✅ Ready | [Materials](./series/ai-ml/w2-ai-usage-token-efficient/materials/workshop-2-content.md) | [Recording](https://youtu.be/7xPwQs_uv-k)
+  - Workshops 3-5: Coming soon
 
 #### **[Collaborative Development Series](./series/collab-dev/README.md)** - *NEW!*
 Master team collaboration with Git and GitHub
